@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Occasus Lab | From Noise to Clarity</title>
+  <meta name="description" content="Occasus Lab turns messy marketing ideas into clear messaging with a Clarity Rewriter, a Brand Message Generator, and a clean editorial content hub.">
+  <meta name="theme-color" content="#f5eddc">
+  <meta property="og:title" content="Occasus Lab | From Noise to Clarity">
+  <meta property="og:description" content="Research-backed tools for clarity, positioning, and calm campaign structure.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/studio-occasus-banner.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Occasus Lab home">
+        <img src="assets/studio-occasus-logo.png" alt="Studio Occasus logo">
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#tools">Tools</a>
+        <a href="#system">System</a>
+        <a href="#blog">Blog</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Research-backed communication system</p>
+          <h1>From noise to clarity, with tools built for real messaging work.</h1>
+          <p class="hero-text">
+            Occasus Lab helps founders, freelancers, and small brands clarify messy ideas,
+            sharpen positioning, and structure campaigns with less friction and more signal.
+          </p>
+          <div class="hero-actions">
+            <a class="button button--primary" href="#clarity-tool">Try the Clarity Rewriter</a>
+            <a class="button button--ghost" href="cognitive-load-clarity.html">Read the first article</a>
+          </div>
+          <ul class="hero-points">
+            <li>Clarity Rewriter</li>
+            <li>Brand Message Generator</li>
+            <li>UTM Builder</li>
+          </ul>
+        </div>
+        <aside class="hero-panel">
+          <div class="hero-card hero-card--dark">
+            <p class="card-label">Process</p>
+            <h2>Exploration first. Precision second.</h2>
+            <p>
+              The interface mirrors Studio Occasus' visual logic: imperfect forms, strong typography,
+              and a steady progression from ambiguity to structure.
+            </p>
+          </div>
+          <figure class="hero-banner">
+            <img src="assets/studio-occasus-banner.jpg" alt="Studio Occasus banner with bold typography and graphic forms">
+          </figure>
+        </aside>
+      </section>
+
+      <section class="section section--intro">
+        <div class="section-heading">
+          <p class="eyebrow">MVP focus</p>
+          <h2>A calm system for clearer marketing decisions.</h2>
+        </div>
+        <div class="capability-grid">
+          <article class="capability-card">
+            <span class="shape shape--seed"></span>
+            <h3>Simplify what is unclear</h3>
+            <p>Rewrite overloaded copy into a tighter, more readable version without losing intent.</p>
+          </article>
+          <article class="capability-card">
+            <span class="shape shape--bridge"></span>
+            <h3>Structure what matters</h3>
+            <p>Turn raw answers into positioning, value proposition, and a practical core message.</p>
+          </article>
+          <article class="capability-card">
+            <span class="shape shape--focus"></span>
+            <h3>Ship without clutter</h3>
+            <p>Build clean campaign links and connect tools to an editorial content hub from day one.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--tools" id="tools">
+        <div class="section-heading">
+          <p class="eyebrow">Core tools</p>
+          <h2>The first three building blocks of Occasus Lab.</h2>
+        </div>
+
+        <div class="tool-stack">
+          <article class="tool-card tool-card--featured" id="clarity-tool">
+            <div class="tool-head">
+              <div>
+                <p class="card-label">Tool 01</p>
+                <h3>Clarity Rewriter</h3>
+              </div>
+              <span class="pill">Functional MVP</span>
+            </div>
+            <p class="tool-summary">
+              Paste a dense marketing paragraph. The tool removes filler, simplifies jargon,
+              tightens sentence flow, and gives you a cleaner version immediately.
+            </p>
+            <div class="tool-grid">
+              <form class="tool-form" id="clarity-form">
+                <label for="clarity-input">Your original text</label>
+                <textarea id="clarity-input" name="clarity-input" rows="10">We are a cutting-edge full-spectrum solution designed to empower mission-aligned brands with a holistic communication framework that leverages high-value storytelling, strategic differentiation, and scalable audience engagement across the digital ecosystem.</textarea>
+                <div class="tool-actions">
+                  <button class="button button--primary" type="submit">Rewrite for clarity</button>
+                  <button class="button button--ghost" type="button" id="clarity-sample">Load another example</button>
+                </div>
+              </form>
+              <div class="tool-output">
+                <div class="metrics" id="clarity-metrics" aria-live="polite"></div>
+                <div class="output-panel">
+                  <p class="output-label">Rewritten version</p>
+                  <div class="output-text" id="clarity-output" aria-live="polite"></div>
+                </div>
+                <div class="output-panel output-panel--soft">
+                  <p class="output-label">Editing moves applied</p>
+                  <ul id="clarity-notes" class="note-list"></ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool-card" id="brand-tool">
+            <div class="tool-head">
+              <div>
+                <p class="card-label">Tool 02</p>
+                <h3>Brand Message Generator</h3>
+              </div>
+              <span class="pill pill--soft">Guided output</span>
+            </div>
+            <div class="tool-grid tool-grid--split">
+              <form class="tool-form" id="brand-form">
+                <label for="audience">Audience</label>
+                <input id="audience" name="audience" type="text" value="founders with a strong offer but fuzzy messaging">
+                <label for="problem">Main problem</label>
+                <input id="problem" name="problem" type="text" value="their message sounds complicated or generic">
+                <label for="outcome">Desired outcome</label>
+                <input id="outcome" name="outcome" type="text" value="clear positioning that people understand quickly">
+                <label for="difference">Key difference</label>
+                <input id="difference" name="difference" type="text" value="a research-backed method focused on signal, not hype">
+                <label for="proof">Proof or credibility</label>
+                <input id="proof" name="proof" type="text" value="clarity principles grounded in neuroscience, cybernetics, and real marketing practice">
+                <label for="tone">Tone</label>
+                <select id="tone" name="tone">
+                  <option value="calm">Calm and editorial</option>
+                  <option value="direct">Direct and confident</option>
+                  <option value="warm">Warm and human</option>
+                </select>
+                <div class="tool-actions">
+                  <button class="button button--primary" type="submit">Generate messaging</button>
+                </div>
+              </form>
+              <div class="tool-output">
+                <div class="output-panel">
+                  <p class="output-label">Positioning statement</p>
+                  <p id="positioning-output" class="output-copy"></p>
+                </div>
+                <div class="output-panel">
+                  <p class="output-label">Value proposition</p>
+                  <p id="value-output" class="output-copy"></p>
+                </div>
+                <div class="output-panel">
+                  <p class="output-label">Homepage lead</p>
+                  <p id="lead-output" class="output-copy"></p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool-card" id="utm-tool">
+            <div class="tool-head">
+              <div>
+                <p class="card-label">Tool 03</p>
+                <h3>UTM Builder</h3>
+              </div>
+              <span class="pill pill--soft">SEO entry point</span>
+            </div>
+            <div class="tool-grid tool-grid--split">
+              <form class="tool-form" id="utm-form">
+                <label for="base-url">Base URL</label>
+                <input id="base-url" name="base-url" type="url" value="https://studiooccasus.com/offer">
+                <label for="utm-source">Source</label>
+                <input id="utm-source" name="utm-source" type="text" value="newsletter">
+                <label for="utm-medium">Medium</label>
+                <input id="utm-medium" name="utm-medium" type="text" value="email">
+                <label for="utm-campaign">Campaign</label>
+                <input id="utm-campaign" name="utm-campaign" type="text" value="clarity-launch">
+                <label for="utm-content">Content</label>
+                <input id="utm-content" name="utm-content" type="text" value="hero-cta">
+                <label for="utm-term">Term</label>
+                <input id="utm-term" name="utm-term" type="text" value="brand-clarity">
+                <div class="tool-actions">
+                  <button class="button button--primary" type="submit">Build URL</button>
+                  <button class="button button--ghost" type="button" id="utm-copy">Copy result</button>
+                </div>
+              </form>
+              <div class="tool-output">
+                <div class="output-panel">
+                  <p class="output-label">Generated URL</p>
+                  <p id="utm-output" class="output-copy output-copy--mono"></p>
+                </div>
+                <div class="output-panel output-panel--soft">
+                  <p class="output-label">Why it matters</p>
+                  <p class="output-copy">Clear tracking keeps SEO, campaigns, and product learning tied together without extra operational noise.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--system" id="system">
+        <div class="section-heading">
+          <p class="eyebrow">Insight engine</p>
+          <h2>A loop that turns research into product rules.</h2>
+        </div>
+        <div class="system-flow">
+          <article class="flow-card"><span>01</span><h3>Research</h3><p>Collect insights from neuroscience, cybernetics, and marketing.</p></article>
+          <article class="flow-card"><span>02</span><h3>Translate</h3><p>Turn academic ideas into simple operating principles.</p></article>
+          <article class="flow-card"><span>03</span><h3>Apply</h3><p>Update tools, prompts, and writing rules with concrete product logic.</p></article>
+          <article class="flow-card"><span>04</span><h3>Publish</h3><p>Feed the blog, improve SEO, and create a learning loop from usage.</p></article>
+        </div>
+      </section>
+
+      <section class="section section--blog" id="blog">
+        <div class="section-heading">
+          <p class="eyebrow">Editorial hub</p>
+          <h2>One article per week, tied directly to product behavior.</h2>
+        </div>
+        <article class="article-preview">
+          <div class="article-copy">
+            <p class="card-label">Article 01</p>
+            <h3>Cognitive Load and Why Clear Messaging Wins</h3>
+            <p>
+              A practical reading of cognitive load: what it means, why overloaded copy creates friction,
+              and how product rules can convert research into better communication.
+            </p>
+            <a class="button button--primary" href="cognitive-load-clarity.html">Open article</a>
+          </div>
+          <div class="article-meta">
+            <p><strong>Scientific concept</strong><br>Cognitive load</p>
+            <p><strong>Marketing application</strong><br>Shorter sentences, fewer claims, clearer hierarchy</p>
+            <p><strong>Product integration</strong><br>Feeds the Clarity Rewriter rules</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Occasus Lab MVP — built for Round 5 App Showcase.</p>
+      <p>Clarity, usefulness, and durable structure over noise.</p>
+    </footer>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
