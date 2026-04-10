@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════
-   Occasus Lab — App Engine v5
-   Firebase Auth · Freemium Usage · 10 Tools · Gamification
+   Occasus Lab — App Engine v3
+   Firebase Auth · Freemium Usage · 5 Tool Engines
    ═══════════════════════════════════════════════════ */
 (function () {
   "use strict";
@@ -21,162 +21,18 @@
   }
 
   /* ── Limits ───────────────────────────────────── */
-  var LIMITS = (typeof FREE_LIMITS !== "undefined") ? FREE_LIMITS : { clarity: 5, brand: 3, utm: 999, tone: 0, headline: 0, counter: 999, readability: 5, email: 5, seo: 5, social: 0 };
-
-  /* ── Gamification ─────────────────────────────── */
-  var XP_VALUES = { clarity: 15, brand: 20, utm: 5, tone: 15, headline: 15, counter: 5, readability: 10, email: 10, seo: 10, social: 15 };
-  var TOOL_NAMES = { clarity: "Clarity Rewriter", brand: "Brand Messaging", utm: "UTM Builder", tone: "Tone Analyzer", headline: "Headline Scorer", counter: "Word Counter", readability: "Readability", email: "Email Subject", seo: "SEO Preview", social: "Social Post" };
-  var LEVELS = [
-    { name: "Intern", min: 0 },
-    { name: "Junior", min: 100 },
-    { name: "Strategist", min: 300 },
-    { name: "Lead", min: 600 },
-    { name: "Director", min: 1000 },
-    { name: "VP", min: 2000 },
-    { name: "Legend", min: 5000 }
-  ];
-  var BADGES = {
-    "first-draft": { icon: "\uD83D\uDCDD", title: "First Draft", desc: "Use any tool for the first time" },
-    "daily-grinder": { icon: "\uD83D\uDCAA", title: "Daily Grinder", desc: "Maintain a 7-day streak" },
-    "tool-explorer": { icon: "\uD83C\uDFC6", title: "Tool Explorer", desc: "Use every tool at least once" },
-    "headline-hero": { icon: "\uD83C\uDF1F", title: "Headline Hero", desc: "Score an A-grade headline" },
-    "clarity-master": { icon: "\u2600\uFE0F", title: "Clarity Master", desc: "Perform 20+ clarity rewrites" },
-    "word-wizard": { icon: "\uD83D\uDCDA", title: "Word Wizard", desc: "Analyze 10,000+ words" },
-    "power-user": { icon: "\u26A1", title: "Power User", desc: "Use 3+ tools daily for 5 days" },
-    "perfectionist": { icon: "\uD83D\uDC8E", title: "Perfectionist", desc: "Rewrite the same text 3 times in one session" }
-  };
+  var LIMITS = (typeof FREE_LIMITS !== "undefined") ? FREE_LIMITS : { clarity: 5, brand: 3, utm: 999, tone: 0, headline: 0 };
 
   function todayKey() { return new Date().toISOString().slice(0, 10); }
 
   function getUsage() {
     try {
       var d = JSON.parse(localStorage.getItem("occ_usage") || "{}");
-      if (d.date !== todayKey()) d = { date: todayKey(), clarity: 0, brand: 0, utm: 0, tone: 0, headline: 0, counter: 0, readability: 0, email: 0, seo: 0, social: 0 };
+      if (d.date !== todayKey()) d = { date: todayKey(), clarity: 0, brand: 0, utm: 0, tone: 0, headline: 0 };
       return d;
-    } catch (e) { return { date: todayKey(), clarity: 0, brand: 0, utm: 0, tone: 0, headline: 0, counter: 0, readability: 0, email: 0, seo: 0, social: 0 }; }
+    } catch (e) { return { date: todayKey(), clarity: 0, brand: 0, utm: 0, tone: 0, headline: 0 }; }
   }
   function saveUsage(u) { localStorage.setItem("occ_usage", JSON.stringify(u)); }
-
-  /* ── Gamification Engine ───────────────────────── */
-  function getGamification() {
-    try { return JSON.parse(localStorage.getItem("occ_gamify") || "{}"); } catch (e) { return {}; }
-  }
-  function saveGamification(g) { localStorage.setItem("occ_gamify", JSON.stringify(g)); }
-
-  function initStreak() {
-    var g = getGamification();
-    var today = todayKey();
-    if (!g.lastDay) { g.lastDay = today; g.streak = 1; g.xp = g.xp || 0; g.badges = g.badges || []; g.totalWords = g.totalWords || 0; saveGamification(g); return; }
-    var last = new Date(g.lastDay);
-    var now = new Date(today);
-    var diff = Math.round((now - last) / 86400000);
-    if (diff === 1) { g.streak = (g.streak || 0) + 1; g.lastDay = today; }
-    else if (diff > 1) { g.streak = 1; g.lastDay = today; }
-    if (!g.badges) g.badges = [];
-    if (!g.totalWords) g.totalWords = 0;
-    saveGamification(g);
-  }
-
-  function addXP(amount, tool) {
-    var g = getGamification();
-    g.xp = (g.xp || 0) + amount;
-    g.lastDay = todayKey();
-    if (tool) {
-      if (!g.toolsUsed) g.toolsUsed = {};
-      g.toolsUsed[tool] = (g.toolsUsed[tool] || 0) + 1;
-    }
-    saveGamification(g);
-    checkBadges();
-    updateGamificationUI();
-  }
-
-  function getLevel(xp) {
-    for (var i = LEVELS.length - 1; i >= 0; i--) { if (xp >= LEVELS[i].min) return LEVELS[i]; }
-    return LEVELS[0];
-  }
-
-  function checkBadges() {
-    var g = getGamification();
-    if (!g.badges) g.badges = [];
-    var u = getUsage();
-    var tu = g.toolsUsed || {};
-    var earned = [];
-
-    if (g.badges.indexOf("first-draft") === -1 && Object.keys(tu).length > 0) earned.push("first-draft");
-    if (g.badges.indexOf("daily-grinder") === -1 && (g.streak || 0) >= 7) earned.push("daily-grinder");
-    if (g.badges.indexOf("tool-explorer") === -1) {
-      var allTools = Object.keys(TOOL_NAMES);
-      var usedAll = allTools.every(function (t) { return (tu[t] || 0) > 0; });
-      if (usedAll) earned.push("tool-explorer");
-    }
-    if (g.badges.indexOf("clarity-master") === -1 && (tu.clarity || 0) >= 20) earned.push("clarity-master");
-    if (g.badges.indexOf("word-wizard") === -1 && (g.totalWords || 0) >= 10000) earned.push("word-wizard");
-
-    if (earned.length) {
-      g.badges = g.badges.concat(earned);
-      saveGamification(g);
-      earned.forEach(function (b) { showBadgeUnlock(b); });
-    }
-  }
-
-  function showBadgeUnlock(badgeKey) {
-    var b = BADGES[badgeKey];
-    if (!b) return;
-    var modal = document.getElementById("badge-modal");
-    if (!modal) return;
-    var iconEl = document.getElementById("badge-modal-icon");
-    var titleEl = document.getElementById("badge-modal-title");
-    var descEl = document.getElementById("badge-modal-desc");
-    if (iconEl) iconEl.textContent = b.icon;
-    if (titleEl) titleEl.textContent = b.title + " unlocked!";
-    if (descEl) descEl.textContent = b.desc;
-    modal.classList.remove("hidden");
-    setTimeout(function () { modal.classList.add("hidden"); }, 3500);
-  }
-
-  function updateGamificationUI() {
-    var g = getGamification();
-    var xp = g.xp || 0;
-    var level = getLevel(xp);
-    var nextLevel = null;
-    for (var i = 0; i < LEVELS.length; i++) { if (LEVELS[i].min > xp) { nextLevel = LEVELS[i]; break; } }
-    var pct = nextLevel ? Math.round(((xp - level.min) / (nextLevel.min - level.min)) * 100) : 100;
-
-    /* Nav pills */
-    var sc = document.getElementById("streak-count");
-    if (sc) sc.textContent = g.streak || 0;
-    var xl = document.getElementById("xp-level");
-    if (xl) xl.textContent = level.name;
-    var xp_el = document.getElementById("xp-points");
-    if (xp_el) xp_el.textContent = xp + " XP";
-    var xf = document.getElementById("xp-fill");
-    if (xf) xf.style.width = pct + "%";
-
-    /* Dashboard stats */
-    var gs = document.getElementById("gf-streak");
-    if (gs) gs.innerHTML = "&#128293; " + (g.streak || 0) + " day" + ((g.streak || 0) !== 1 ? "s" : "");
-    var gl = document.getElementById("gf-level");
-    if (gl) gl.textContent = level.name;
-    var gx = document.getElementById("gf-xp");
-    if (gx) gx.textContent = xp;
-    var u = getUsage();
-    var toolsToday = 0;
-    Object.keys(TOOL_NAMES).forEach(function (t) { if ((u[t] || 0) > 0) toolsToday++; });
-    var gt = document.getElementById("gf-tools-today");
-    if (gt) gt.textContent = toolsToday + " / " + Object.keys(TOOL_NAMES).length;
-    var gc = document.getElementById("gf-challenge");
-    if (gc) gc.textContent = toolsToday >= 3 ? "Complete! +50 XP bonus" : "Use 3 different tools (" + toolsToday + "/3)";
-
-    /* Badges */
-    var badges = g.badges || [];
-    Object.keys(BADGES).forEach(function (key) {
-      var el = document.querySelector(".badge-item[data-badge='" + key + "']");
-      if (el) {
-        if (badges.indexOf(key) !== -1) { el.classList.remove("badge-item--locked"); el.classList.add("badge-item--earned"); }
-        else { el.classList.add("badge-item--locked"); el.classList.remove("badge-item--earned"); }
-      }
-    });
-  }
 
   function canUse(tool) {
     if (isPro) return true;
@@ -188,7 +44,6 @@
     u[tool] = (u[tool] || 0) + 1;
     saveUsage(u);
     updateUsageBar();
-    addXP(XP_VALUES[tool] || 10, tool);
     if (firebaseReady && currentUser) {
       db.collection("usage").doc(currentUser.uid).set(u, { merge: true }).catch(function () {});
     }
@@ -261,8 +116,8 @@
     if (isPro) { bar.classList.add("hidden"); return; }
     bar.classList.remove("hidden");
     var u = getUsage();
-    var total = (u.clarity || 0) + (u.brand || 0) + (u.readability || 0) + (u.email || 0) + (u.seo || 0);
-    var max = LIMITS.clarity + LIMITS.brand + LIMITS.readability + LIMITS.email + LIMITS.seo;
+    var total = (u.clarity || 0) + (u.brand || 0);
+    var max = LIMITS.clarity + LIMITS.brand;
     var pct = Math.min(100, Math.round((total / max) * 100));
     var fill = bar.querySelector(".usage-bar__fill");
     var text = bar.querySelector(".usage-bar__text");
@@ -329,11 +184,6 @@
     toggleAvatarDrop: function () {
       var d = document.getElementById("avatar-dropdown");
       if (d) d.classList.toggle("hidden");
-    },
-    copySocial: function (platform) {
-      var el = document.getElementById("social-" + platform + "-text");
-      if (!el || !el.textContent) return;
-      navigator.clipboard.writeText(el.textContent).then(function () { toast("Copied!", "success"); }).catch(function () { toast("Copy failed", "error"); });
     }
   };
 
@@ -681,259 +531,6 @@
   }
 
   /* ═══════════════════════════════════════════════════
-     TOOL 6 · Word Counter (live)
-     ═══════════════════════════════════════════════════ */
-  var PLATFORM_LIMITS = { x: 280, li: 3000, ig: 2200, fb: 63206 };
-
-  function runCounter() {
-    var text = (document.getElementById("counter-input").value || "").trim();
-    var words = text ? text.split(/\s+/).length : 0;
-    var chars = text.length;
-    var sentences = text ? (text.match(/[.!?]+/g) || []).length || 1 : 0;
-    var readMin = Math.max(1, Math.round(words / 200));
-
-    document.getElementById("counter-words").textContent = words;
-    document.getElementById("counter-chars").textContent = chars;
-    document.getElementById("counter-sentences").textContent = sentences;
-    document.getElementById("counter-time").textContent = readMin + " min";
-
-    /* platform limit bars */
-    Object.keys(PLATFORM_LIMITS).forEach(function (p) {
-      var fill = document.getElementById("limit-" + p);
-      if (fill) {
-        var pct = Math.min(100, Math.round((chars / PLATFORM_LIMITS[p]) * 100));
-        fill.style.width = pct + "%";
-        fill.classList.toggle("limit-bar__fill--over", chars > PLATFORM_LIMITS[p]);
-      }
-    });
-
-    /* Track total words for gamification */
-    var g = getGamification();
-    g.totalWords = (g.totalWords || 0) + words;
-    saveGamification(g);
-  }
-
-  /* ═══════════════════════════════════════════════════
-     TOOL 7 · Readability Analyzer
-     ═══════════════════════════════════════════════════ */
-  function countSyllables(word) {
-    word = word.toLowerCase().replace(/[^a-z]/g, "");
-    if (word.length <= 3) return 1;
-    word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, "");
-    word = word.replace(/^y/, "");
-    var m = word.match(/[aeiouy]{1,2}/g);
-    return m ? m.length : 1;
-  }
-
-  function runReadability() {
-    if (!canUse("readability")) { toast("Daily limit reached — upgrade to Pro", "info"); window.OccApp.showUpgradeModal(); return; }
-    var text = (document.getElementById("readability-input").value || "").trim();
-    if (!text) { toast("Paste some text to analyze", "info"); return; }
-    recordUse("readability");
-
-    var sentences = text.split(/[.!?]+/).filter(function (s) { return s.trim().length > 0; });
-    var words = text.split(/\s+/);
-    var totalSyllables = 0;
-    words.forEach(function (w) { totalSyllables += countSyllables(w); });
-
-    var wc = words.length;
-    var sc = Math.max(1, sentences.length);
-    var avgWPS = (wc / sc).toFixed(1);
-    var flesch = 206.835 - 1.015 * (wc / sc) - 84.6 * (totalSyllables / wc);
-    flesch = Math.max(0, Math.min(100, Math.round(flesch)));
-
-    var grade;
-    if (flesch >= 80) grade = "5th grade (very easy)";
-    else if (flesch >= 60) grade = "8th grade (standard)";
-    else if (flesch >= 40) grade = "College (difficult)";
-    else grade = "Graduate (very difficult)";
-
-    /* Long sentences */
-    var longSentences = sentences.filter(function (s) { return s.trim().split(/\s+/).length > 20; }).length;
-
-    /* Passive voice (simple heuristic) */
-    var passiveCount = (text.match(/\b(is|was|were|are|been|being)\s+\w+ed\b/gi) || []).length;
-
-    document.getElementById("readability-score").textContent = flesch;
-    document.getElementById("readability-score").className = "big-score " + (flesch >= 60 ? "score-good" : flesch >= 40 ? "score-ok" : "score-bad");
-    document.getElementById("readability-grade").textContent = grade;
-    document.getElementById("readability-avgwps").textContent = avgWPS;
-    document.getElementById("readability-long").textContent = longSentences ? longSentences + " sentence" + (longSentences > 1 ? "s" : "") + " over 20 words" : "None — great!";
-    document.getElementById("readability-passive").textContent = passiveCount ? passiveCount + " instance" + (passiveCount > 1 ? "s" : "") + " detected" : "None found";
-
-    var verdict;
-    if (flesch >= 70) verdict = "Excellent readability. Your audience will have no trouble understanding this.";
-    else if (flesch >= 50) verdict = "Good readability. Consider shortening a few sentences for broader appeal.";
-    else verdict = "Difficult to read. Try shorter sentences, simpler words, and active voice.";
-    document.getElementById("readability-verdict").textContent = verdict;
-    toast("Readability analysis complete", "success");
-  }
-
-  /* ═══════════════════════════════════════════════════
-     TOOL 8 · Email Subject Tester
-     ═══════════════════════════════════════════════════ */
-  var SPAM_WORDS = ["free", "winner", "congratulations", "act now", "urgent", "limited time", "click here", "buy now", "order now", "discount", "cash", "lowest price", "guarantee", "no obligation", "risk-free", "100%"];
-  var EMAIL_POWER_WORDS = ["discover", "proven", "secret", "exclusive", "instant", "new", "you", "your", "how", "why", "alert", "breaking", "mistake", "transform", "unlock"];
-
-  function runEmail() {
-    if (!canUse("email")) { toast("Daily limit reached — upgrade to Pro", "info"); window.OccApp.showUpgradeModal(); return; }
-    var subject = (document.getElementById("email-subject").value || "").trim();
-    if (!subject) { toast("Enter a subject line", "info"); return; }
-    recordUse("email");
-
-    var score = 50;
-    var len = subject.length;
-    var lower = subject.toLowerCase();
-
-    /* Length scoring: 30-60 chars is ideal for mobile */
-    if (len >= 30 && len <= 60) score += 20;
-    else if (len >= 20 && len <= 70) score += 10;
-    else if (len > 70) score -= 10;
-
-    /* Spam check */
-    var spamCount = 0;
-    SPAM_WORDS.forEach(function (w) { if (lower.indexOf(w) !== -1) spamCount++; });
-    score -= spamCount * 8;
-
-    /* Power words */
-    var powerCount = 0;
-    EMAIL_POWER_WORDS.forEach(function (w) { if (lower.indexOf(w) !== -1) powerCount++; });
-    score += powerCount * 6;
-
-    /* Bonus: starts with number, has question, personalization */
-    if (/^\d/.test(subject)) score += 5;
-    if (/\?$/.test(subject)) score += 5;
-    if (/\byou\b|\byour\b/i.test(subject)) score += 5;
-    /* Penalty: ALL CAPS */
-    if (subject === subject.toUpperCase() && subject.length > 3) score -= 15;
-    /* Penalty: excessive punctuation */
-    if (/[!]{2,}|[?]{2,}/.test(subject)) score -= 10;
-
-    score = Math.max(0, Math.min(100, score));
-
-    document.getElementById("email-score").textContent = score + "/100";
-    document.getElementById("email-score").className = "big-score " + (score >= 70 ? "score-good" : score >= 45 ? "score-ok" : "score-bad");
-    document.getElementById("email-len").textContent = len + " chars " + (len >= 30 && len <= 60 ? "(ideal for mobile)" : len > 60 ? "(may get truncated)" : "(short)");
-    document.getElementById("email-spam").textContent = spamCount ? spamCount + " spam trigger" + (spamCount > 1 ? "s" : "") + " found" : "Clean — no spam triggers";
-    document.getElementById("email-spam").className = spamCount ? "metric-bad" : "metric-good";
-    document.getElementById("email-power").textContent = powerCount ? powerCount + " power word" + (powerCount > 1 ? "s" : "") : "No power words — consider adding one";
-    document.getElementById("email-preview-subject").textContent = subject;
-    document.getElementById("email-preview-preview").textContent = subject.length > 40 ? subject.slice(0, 40) + "..." : subject;
-    toast("Subject line scored", "success");
-  }
-
-  /* ═══════════════════════════════════════════════════
-     TOOL 9 · SEO Meta Preview
-     ═══════════════════════════════════════════════════ */
-  function escHTML(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
-
-  function runSEO() {
-    if (!canUse("seo")) { toast("Daily limit reached — upgrade to Pro", "info"); window.OccApp.showUpgradeModal(); return; }
-    var title = (document.getElementById("seo-title").value || "").trim();
-    var desc = (document.getElementById("seo-desc").value || "").trim();
-    var url = (document.getElementById("seo-url").value || "").trim();
-    if (!title) { toast("Enter a page title", "info"); return; }
-    recordUse("seo");
-
-    var score = 50;
-    var tips = [];
-
-    /* Title length: 50-60 is ideal */
-    if (title.length >= 50 && title.length <= 60) { score += 15; }
-    else if (title.length < 30) { score -= 10; tips.push("Title is too short — aim for 50-60 characters"); }
-    else if (title.length > 60) { tips.push("Title may be truncated — keep under 60 chars"); }
-    else { score += 5; }
-
-    /* Description length: 120-155 is ideal */
-    if (desc.length >= 120 && desc.length <= 155) { score += 15; }
-    else if (desc.length < 70) { score -= 10; tips.push("Meta description is too short — aim for 120-155 characters"); }
-    else if (desc.length > 155) { tips.push("Description may be truncated in SERP"); }
-    else { score += 5; }
-
-    /* Power word in title */
-    var hasPower = false;
-    POWER_WORDS.forEach(function (w) { if (title.toLowerCase().indexOf(w) !== -1) hasPower = true; });
-    if (hasPower) { score += 10; } else { tips.push("Add a power word to the title for better CTR"); }
-
-    /* Number in title */
-    if (/\d/.test(title)) { score += 5; } else { tips.push("Headlines with numbers get more clicks"); }
-
-    if (!url) tips.push("Add a URL for the full SERP preview");
-    if (!tips.length) tips.push("Looking good! Your meta tags are well-optimized.");
-
-    score = Math.max(0, Math.min(100, score));
-
-    /* SERP preview */
-    var serpTitle = document.getElementById("serp-title");
-    var serpUrl = document.getElementById("serp-url");
-    var serpDesc = document.getElementById("serp-desc");
-    if (serpTitle) serpTitle.textContent = title.length > 60 ? title.slice(0, 57) + "..." : title;
-    if (serpUrl) serpUrl.textContent = url || "example.com";
-    if (serpDesc) serpDesc.textContent = desc.length > 155 ? desc.slice(0, 152) + "..." : desc || "No description provided";
-
-    document.getElementById("seo-score").textContent = score + "/100";
-    document.getElementById("seo-score").className = "big-score " + (score >= 70 ? "score-good" : score >= 45 ? "score-ok" : "score-bad");
-
-    var tipsList = document.getElementById("seo-tips");
-    tipsList.innerHTML = "";
-    tips.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; tipsList.appendChild(li); });
-
-    /* HTML snippet */
-    var html = '<title>' + escHTML(title) + '</title>\n<meta name="description" content="' + escHTML(desc) + '">';
-    document.getElementById("seo-html").textContent = html;
-    toast("SEO preview generated", "success");
-  }
-
-  function copySEOHTML() {
-    var html = document.getElementById("seo-html").textContent;
-    if (!html) return;
-    navigator.clipboard.writeText(html).then(function () { toast("HTML copied!", "success"); }).catch(function () { toast("Copy failed", "error"); });
-  }
-
-  /* ═══════════════════════════════════════════════════
-     TOOL 10 · Social Post Formatter (PRO)
-     ═══════════════════════════════════════════════════ */
-  function extractHashtags(text) {
-    var words = text.toLowerCase().replace(/[^a-z0-9\s]/g, "").split(/\s+/).filter(function (w) { return w.length > 3; });
-    var freq = {};
-    words.forEach(function (w) { freq[w] = (freq[w] || 0) + 1; });
-    return Object.keys(freq).sort(function (a, b) { return freq[b] - freq[a]; }).slice(0, 5).map(function (w) { return "#" + w; });
-  }
-
-  function runSocial() {
-    if (!canUse("social")) { toast("Social Post is a Pro feature", "info"); window.OccApp.showUpgradeModal(); return; }
-    var text = (document.getElementById("social-input").value || "").trim();
-    if (!text) { toast("Type a message to format", "info"); return; }
-    recordUse("social");
-
-    var tags = extractHashtags(text);
-    var tagStr = tags.join(" ");
-
-    /* X: 280 char limit, concise */
-    var xText = text.length > 250 ? text.slice(0, 247) + "..." : text;
-    if (xText.length + tagStr.length + 2 <= 280) xText += "\n\n" + tagStr;
-
-    /* LinkedIn: professional, longer form */
-    var liText = text + "\n\n" + tagStr + "\n\n#marketing #strategy";
-
-    /* Instagram: emoji-rich, hashtag block */
-    var igText = text + "\n\n.\n.\n.\n" + tagStr + " #marketing #digitalmarketing #content";
-
-    /* Threads: casual, conversational */
-    var thText = text.replace(/\.$/, "") + " \u2014 thoughts? " + tags.slice(0, 3).join(" ");
-
-    document.getElementById("social-x-text").textContent = xText;
-    document.getElementById("social-li-text").textContent = liText;
-    document.getElementById("social-ig-text").textContent = igText;
-    document.getElementById("social-th-text").textContent = thText;
-    document.getElementById("social-x-count").textContent = xText.length + "/280";
-    document.getElementById("social-li-count").textContent = liText.length + "/3000";
-    document.getElementById("social-ig-count").textContent = igText.length + "/2200";
-    document.getElementById("social-th-count").textContent = thText.length + "/500";
-    toast("Formatted for 4 platforms", "success");
-  }
-
-  /* ═══════════════════════════════════════════════════
      TOAST
      ═══════════════════════════════════════════════════ */
   function toast(msg, type) {
@@ -972,8 +569,6 @@
     initTabs();
     initScrollSpy();
     updateUsageBar();
-    initStreak();
-    updateGamificationUI();
 
     /* Wire tool buttons */
     var btnClarity = document.getElementById("btn-clarity");
@@ -993,25 +588,6 @@
 
     var btnHeadline = document.getElementById("btn-headline");
     if (btnHeadline) btnHeadline.addEventListener("click", runHeadline);
-
-    var btnReadability = document.getElementById("btn-readability");
-    if (btnReadability) btnReadability.addEventListener("click", runReadability);
-
-    var btnEmail = document.getElementById("btn-email");
-    if (btnEmail) btnEmail.addEventListener("click", runEmail);
-
-    var btnSeo = document.getElementById("btn-seo");
-    if (btnSeo) btnSeo.addEventListener("click", runSEO);
-
-    var btnSeoCopy = document.getElementById("seo-copy");
-    if (btnSeoCopy) btnSeoCopy.addEventListener("click", copySEOHTML);
-
-    var btnSocial = document.getElementById("btn-social");
-    if (btnSocial) btnSocial.addEventListener("click", runSocial);
-
-    /* Word Counter: live keyup */
-    var counterInput = document.getElementById("counter-input");
-    if (counterInput) counterInput.addEventListener("keyup", runCounter);
   }
 
   if (document.readyState === "loading") {

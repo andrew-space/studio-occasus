@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Occasus Lab | 10 Free Marketing Tools</title>
-  <meta name="description" content="10 research-backed marketing tools: Clarity Rewriter, Brand Messaging, UTM Builder, Readability Analyzer, Email Subject Tester, SEO Preview, and more. Free to use, gamified for daily growth.">
+  <title>Occasus Lab | From Noise to Clarity</title>
+  <meta name="description" content="Research-backed tools for clarity-driven marketing. Rewrite messy copy, generate brand messaging, analyze tone, and score headlines.">
   <meta name="theme-color" content="#f5eddc">
-  <meta property="og:title" content="Occasus Lab | 10 Free Marketing Tools">
-  <meta property="og:description" content="10 tools for clarity, positioning, and calm campaign structure. Gamified for daily use.">
+  <meta property="og:title" content="Occasus Lab | From Noise to Clarity">
+  <meta property="og:description" content="5 tools for clarity, positioning, and calm campaign structure.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/studio-occasus-banner.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,30 +28,19 @@
         <a href="#pricing" class="nav__link">Pricing</a>
         <a href="blog.html" class="nav__link">Blog</a>
       </nav>
-      <div class="nav__right">
-        <div class="streak-pill" title="Daily streak">
-          <span class="streak-pill__fire">&#128293;</span>
-          <span class="streak-pill__count" id="streak-count">0</span>
-        </div>
-        <div class="xp-pill" title="Your Marketing XP">
-          <span class="xp-pill__level" id="xp-level">Intern</span>
-          <div class="xp-pill__bar"><div class="xp-pill__fill" id="xp-fill" style="width:0%"></div></div>
-          <span class="xp-pill__points" id="xp-points">0 XP</span>
-        </div>
-        <div class="nav__auth" id="auth-area">
-          <button class="btn btn--primary btn--sm" id="btn-signin" onclick="OccApp.showAuthModal()">Sign in</button>
-          <div class="avatar-menu hidden" id="avatar-menu">
-            <button class="avatar-btn" id="avatar-btn" aria-label="Account menu" onclick="OccApp.toggleAvatarDrop()">
-              <img id="avatar-img" src="" alt="" width="32" height="32">
-            </button>
-            <div class="avatar-dropdown hidden" id="avatar-dropdown">
-              <p class="avatar-dropdown__name" id="user-name"></p>
-              <p class="avatar-dropdown__email" id="user-email"></p>
-              <hr>
-              <span class="avatar-dropdown__plan" id="user-plan">Free plan</span>
-              <a href="admin.html" class="avatar-dropdown__link hidden" id="admin-link">Admin panel</a>
-              <button class="btn btn--sm btn--ghost" onclick="OccApp.signOut()">Sign out</button>
-            </div>
+      <div class="nav__auth" id="auth-area">
+        <button class="btn btn--primary btn--sm" id="btn-signin" onclick="OccApp.showAuthModal()">Sign in</button>
+        <div class="avatar-menu hidden" id="avatar-menu">
+          <button class="avatar-btn" id="avatar-btn" aria-label="Account menu" onclick="OccApp.toggleAvatarDrop()">
+            <img id="avatar-img" src="" alt="" width="32" height="32">
+          </button>
+          <div class="avatar-dropdown hidden" id="avatar-dropdown">
+            <p class="avatar-dropdown__name" id="user-name"></p>
+            <p class="avatar-dropdown__email" id="user-email"></p>
+            <hr>
+            <span class="avatar-dropdown__plan" id="user-plan">Free plan</span>
+            <a href="admin.html" class="avatar-dropdown__link hidden" id="admin-link">Admin panel</a>
+            <button class="btn btn--sm btn--ghost" onclick="OccApp.signOut()">Sign out</button>
           </div>
         </div>
       </div>
@@ -63,24 +52,19 @@
     <!-- ── Hero ──────────────────────────────────── -->
     <section class="hero">
       <div class="hero__content">
-        <span class="tag">10 research-backed marketing tools &mdash; free</span>
+        <span class="tag">Research-backed clarity tools</span>
         <h1>From noise<br>to clarity.</h1>
-        <p class="hero__sub">Rewrite copy, score headlines, test email subjects, format social posts, check readability, and more. Gamified so you improve every day.</p>
+        <p class="hero__sub">Occasus Lab helps founders and small brands clarify messy ideas, sharpen positioning, and structure campaigns&nbsp;&mdash; with less friction and more signal.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary btn--lg" href="#tools">Start using tools &mdash; free</a>
+          <a class="btn btn--primary btn--lg" href="#tools">Try free &mdash; no account needed</a>
           <a class="btn btn--ghost btn--lg" href="#pricing">See pricing &rarr;</a>
         </div>
         <div class="hero__proof">
           <span class="hero__pill">Clarity Rewriter</span>
-          <span class="hero__pill">Brand Messaging</span>
+          <span class="hero__pill">Brand Message Generator</span>
           <span class="hero__pill">UTM Builder</span>
-          <span class="hero__pill">Word Counter</span>
-          <span class="hero__pill">Readability</span>
-          <span class="hero__pill">Email Subject</span>
-          <span class="hero__pill">SEO Preview</span>
-          <span class="hero__pill hero__pill--pro">Headline PRO</span>
-          <span class="hero__pill hero__pill--pro">Tone PRO</span>
-          <span class="hero__pill hero__pill--pro">Social PRO</span>
+          <span class="hero__pill hero__pill--pro">Tone Analyzer <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0L6.12 3.53H9.76L6.82 5.71L7.94 9.24L5 7.06L2.06 9.24L3.18 5.71L0.24 3.53H3.88L5 0Z" fill="currentColor"/></svg></span>
+          <span class="hero__pill hero__pill--pro">Headline Scorer <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0L6.12 3.53H9.76L6.82 5.71L7.94 9.24L5 7.06L2.06 9.24L3.18 5.71L0.24 3.53H3.88L5 0Z" fill="currentColor"/></svg></span>
         </div>
       </div>
       <div class="hero__visual">
@@ -102,47 +86,11 @@
       </div>
     </section>
 
-    <!-- ── Gamification Dashboard ────────────────── -->
-    <section class="section gamify" id="gamify">
-      <div class="gamify__bar">
-        <div class="gamify__stat">
-          <span class="gamify__label">Streak</span>
-          <strong id="gf-streak">&#128293; 0 days</strong>
-        </div>
-        <div class="gamify__stat">
-          <span class="gamify__label">Level</span>
-          <strong id="gf-level">Intern</strong>
-        </div>
-        <div class="gamify__stat">
-          <span class="gamify__label">Total XP</span>
-          <strong id="gf-xp">0</strong>
-        </div>
-        <div class="gamify__stat">
-          <span class="gamify__label">Tools today</span>
-          <strong id="gf-tools-today">0 / 10</strong>
-        </div>
-        <div class="gamify__stat gamify__stat--challenge">
-          <span class="gamify__label">Daily challenge</span>
-          <strong id="gf-challenge">Use 3 different tools</strong>
-        </div>
-      </div>
-      <div class="badges-row" id="badges-row">
-        <span class="badge-item badge-item--locked" data-badge="first-draft" title="First Draft — Use any tool once">&#128221;</span>
-        <span class="badge-item badge-item--locked" data-badge="daily-grinder" title="Daily Grinder — 7-day streak">&#128170;</span>
-        <span class="badge-item badge-item--locked" data-badge="tool-explorer" title="Tool Explorer — Use every tool">&#127942;</span>
-        <span class="badge-item badge-item--locked" data-badge="headline-hero" title="Headline Hero">&#127775;</span>
-        <span class="badge-item badge-item--locked" data-badge="clarity-master" title="Clarity Master — 20 rewrites">&#9728;&#65039;</span>
-        <span class="badge-item badge-item--locked" data-badge="word-wizard" title="Word Wizard — 10K words">&#128218;</span>
-        <span class="badge-item badge-item--locked" data-badge="power-user" title="Power User — 3+ tools, 5 days">&#9889;</span>
-        <span class="badge-item badge-item--locked" data-badge="perfectionist" title="Perfectionist — 3 rewrites in one session">&#128142;</span>
-      </div>
-    </section>
-
     <!-- ── Tools (tabbed) ────────────────────────── -->
     <section class="section" id="tools">
       <div class="section__head">
-        <span class="tag">Marketing toolkit</span>
-        <h2>Ten tools for clarity-driven marketing.</h2>
+        <span class="tag">Core tools</span>
+        <h2>Five tools for clarity-driven marketing.</h2>
       </div>
 
       <div class="tabs" role="tablist">
@@ -160,21 +108,6 @@
         </button>
         <button class="tabs__btn tabs__btn--pro" role="tab" aria-selected="false" aria-controls="panel-headline" data-tool="headline">
           <span class="tabs__num">05</span> Headline Scorer <span class="pro-badge">PRO</span>
-        </button>
-        <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="panel-counter" data-tool="counter">
-          <span class="tabs__num">06</span> Word Counter
-        </button>
-        <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="panel-readability" data-tool="readability">
-          <span class="tabs__num">07</span> Readability
-        </button>
-        <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="panel-email" data-tool="email">
-          <span class="tabs__num">08</span> Email Subject
-        </button>
-        <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="panel-seo" data-tool="seo">
-          <span class="tabs__num">09</span> SEO Preview
-        </button>
-        <button class="tabs__btn tabs__btn--pro" role="tab" aria-selected="false" aria-controls="panel-social" data-tool="social">
-          <span class="tabs__num">10</span> Social Post <span class="pro-badge">PRO</span>
         </button>
       </div>
 
@@ -326,168 +259,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Panel: Word Counter -->
-      <div class="panel" id="panel-counter" role="tabpanel">
-        <div class="panel__grid">
-          <form class="form" id="counter-form">
-            <label for="counter-input">Your text</label>
-            <textarea id="counter-input" rows="8" placeholder="Paste or type text..."></textarea>
-          </form>
-          <div class="results">
-            <div class="metrics metrics--4">
-              <div class="metric"><span>Words</span><strong id="counter-words">0</strong></div>
-              <div class="metric"><span>Characters</span><strong id="counter-chars">0</strong></div>
-              <div class="metric"><span>Sentences</span><strong id="counter-sentences">0</strong></div>
-              <div class="metric"><span>Read time</span><strong id="counter-time">0 min</strong></div>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Platform limits</span>
-              <div class="platform-limits">
-                <div class="limit-row"><span>X / Twitter</span><div class="limit-bar__track"><div class="limit-bar__fill" id="limit-x"></div></div></div>
-                <div class="limit-row"><span>LinkedIn</span><div class="limit-bar__track"><div class="limit-bar__fill" id="limit-li"></div></div></div>
-                <div class="limit-row"><span>Instagram</span><div class="limit-bar__track"><div class="limit-bar__fill" id="limit-ig"></div></div></div>
-                <div class="limit-row"><span>Facebook</span><div class="limit-bar__track"><div class="limit-bar__fill" id="limit-fb"></div></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Panel: Readability Analyzer -->
-      <div class="panel" id="panel-readability" role="tabpanel">
-        <div class="panel__grid">
-          <form class="form" id="readability-form">
-            <label for="readability-input">Paste your text</label>
-            <textarea id="readability-input" rows="8" placeholder="Paste marketing copy, landing page text, or blog post..."></textarea>
-            <div class="form__actions">
-              <button class="btn btn--primary" type="button" id="btn-readability">Analyze readability</button>
-            </div>
-          </form>
-          <div class="results">
-            <div class="metrics">
-              <div class="metric"><span>Flesch Score</span><strong id="readability-score">&mdash;</strong></div>
-              <div class="metric"><span>Grade Level</span><strong id="readability-grade">&mdash;</strong></div>
-              <div class="metric"><span>Avg words/sentence</span><strong id="readability-avgwps">&mdash;</strong></div>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Long sentences</span>
-              <p id="readability-long">&mdash;</p>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Passive voice</span>
-              <p id="readability-passive">&mdash;</p>
-            </div>
-            <div class="result-card result-card--accent">
-              <span class="result-card__label">Verdict</span>
-              <p id="readability-verdict"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Panel: Email Subject Tester -->
-      <div class="panel" id="panel-email" role="tabpanel">
-        <div class="panel__grid">
-          <form class="form" id="email-form">
-            <label for="email-subject">Subject line</label>
-            <input id="email-subject" type="text" placeholder="e.g. You're leaving money on the table">
-            <div class="form__actions">
-              <button class="btn btn--primary" type="button" id="btn-email">Score subject line</button>
-            </div>
-          </form>
-          <div class="results">
-            <div class="result-card">
-              <span class="result-card__label">Score</span>
-              <p id="email-score" class="big-score">&mdash;</p>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Length</span>
-              <p id="email-len">&mdash;</p>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Spam check</span>
-              <p id="email-spam">&mdash;</p>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Power words</span>
-              <p id="email-power">&mdash;</p>
-            </div>
-            <div class="result-card result-card--accent">
-              <span class="result-card__label">Mobile preview</span>
-              <div class="mobile-preview">
-                <div class="mobile-preview__from">From: Your Brand</div>
-                <div class="mobile-preview__subject" id="email-preview-subject">&mdash;</div>
-                <div class="mobile-preview__preview" id="email-preview-preview"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Panel: SEO Meta Preview -->
-      <div class="panel" id="panel-seo" role="tabpanel">
-        <div class="panel__grid">
-          <form class="form" id="seo-form">
-            <label for="seo-title">Page title</label>
-            <input id="seo-title" type="text" placeholder="My Awesome Landing Page" maxlength="90">
-            <label for="seo-desc">Meta description</label>
-            <textarea id="seo-desc" rows="3" placeholder="A compelling description..." maxlength="200"></textarea>
-            <label for="seo-url">Page URL</label>
-            <input id="seo-url" type="url" placeholder="https://example.com/page">
-            <div class="form__actions">
-              <button class="btn btn--primary" type="button" id="btn-seo">Generate preview</button>
-              <button class="btn btn--ghost" type="button" id="seo-copy">Copy HTML</button>
-            </div>
-          </form>
-          <div class="results">
-            <div class="result-card">
-              <span class="result-card__label">Google SERP preview</span>
-              <div class="serp-preview">
-                <div class="serp-preview__url" id="serp-url">example.com</div>
-                <div class="serp-preview__title" id="serp-title">Page Title</div>
-                <div class="serp-preview__desc" id="serp-desc">Meta description appears here...</div>
-              </div>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">SEO Score</span>
-              <p id="seo-score" class="big-score">&mdash;</p>
-            </div>
-            <div class="result-card result-card--accent">
-              <span class="result-card__label">Tips</span>
-              <ul id="seo-tips" class="note-list"></ul>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">HTML snippet</span>
-              <pre id="seo-html" class="mono"></pre>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Panel: Social Post Formatter (PRO) -->
-      <div class="panel" id="panel-social" role="tabpanel">
-        <div class="panel__grid">
-          <form class="form" id="social-form">
-            <div class="pro-gate" id="social-gate">
-              <span class="pro-gate__badge">PRO</span>
-              <p>Format one message for X, LinkedIn, Instagram, and Threads instantly.</p>
-              <button class="btn btn--primary" type="button" onclick="OccApp.showUpgradeModal()">Unlock with Pro</button>
-            </div>
-            <label for="social-input">Core message</label>
-            <textarea id="social-input" rows="5" placeholder="Type your core message..."></textarea>
-            <div class="form__actions">
-              <button class="btn btn--primary" type="button" id="btn-social">Format for all platforms</button>
-            </div>
-          </form>
-          <div class="results">
-            <div class="result-card"><span class="result-card__label">X / Twitter &mdash; <span id="social-x-count"></span></span><p id="social-x-text"></p><button class="btn btn--sm btn--ghost" type="button" onclick="OccApp.copySocial('x')">Copy</button></div>
-            <div class="result-card"><span class="result-card__label">LinkedIn &mdash; <span id="social-li-count"></span></span><p id="social-li-text"></p><button class="btn btn--sm btn--ghost" type="button" onclick="OccApp.copySocial('li')">Copy</button></div>
-            <div class="result-card"><span class="result-card__label">Instagram &mdash; <span id="social-ig-count"></span></span><p id="social-ig-text"></p><button class="btn btn--sm btn--ghost" type="button" onclick="OccApp.copySocial('ig')">Copy</button></div>
-            <div class="result-card result-card--accent"><span class="result-card__label">Threads &mdash; <span id="social-th-count"></span></span><p id="social-th-text"></p><button class="btn btn--sm btn--ghost" type="button" onclick="OccApp.copySocial('th')">Copy</button></div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- ── System (dark) ─────────────────────────── -->
@@ -500,7 +271,7 @@
         <div class="flow">
           <div class="flow__step"><span class="flow__num">01</span><h3>Research</h3><p>Insights from neuroscience, cybernetics, and marketing.</p></div>
           <span class="flow__arrow">&rarr;</span>
-          <div class="flow__step"><span class="flow__num">02</span><h3>Synthesize</h3><p>We distill academic papers into actionable knowledge.</p></div>
+          <div class="flow__step"><span class="flow__num">02</span><h3>Synthesize</h3><p>NotebookLM transforms raw papers into knowledge bases.</p></div>
           <span class="flow__arrow">&rarr;</span>
           <div class="flow__step"><span class="flow__num">03</span><h3>Apply</h3><p>Update tools, prompts, and writing rules with product logic.</p></div>
           <span class="flow__arrow">&rarr;</span>
@@ -523,13 +294,9 @@
             <li class="yes">5 Clarity Rewrites / day</li>
             <li class="yes">3 Brand Messages / day</li>
             <li class="yes">Unlimited UTM Builder</li>
-            <li class="yes">Unlimited Word Counter</li>
-            <li class="yes">5 Readability checks / day</li>
-            <li class="yes">5 Email Subject tests / day</li>
-            <li class="yes">5 SEO Previews / day</li>
             <li class="no">Tone Analyzer</li>
             <li class="no">Headline Scorer</li>
-            <li class="no">Social Post Formatter</li>
+            <li class="no">Save &amp; export history</li>
           </ul>
           <a class="btn btn--ghost" href="#tools">Start free</a>
         </div>
@@ -538,55 +305,53 @@
           <h3>Pro</h3>
           <p class="pricing-card__price"><span class="pricing-card__amount">€9</span>/month</p>
           <ul class="pricing-card__features">
-            <li class="yes">Unlimited use of all 10 tools</li>
+            <li class="yes">Unlimited Clarity Rewrites</li>
+            <li class="yes">Unlimited Brand Messages</li>
+            <li class="yes">Unlimited UTM Builder</li>
             <li class="yes">Tone Analyzer</li>
             <li class="yes">Headline Scorer</li>
-            <li class="yes">Social Post Formatter</li>
             <li class="yes">Save &amp; export history</li>
-            <li class="yes">Gamification &amp; badge tracking</li>
           </ul>
           <button class="btn btn--primary btn--lg" onclick="OccApp.showUpgradeModal()">Upgrade to Pro</button>
         </div>
       </div>
     </section>
 
-    <!-- ── Blog Preview (HubSpot style) ──────────── -->
+    <!-- ── Blog Preview ──────────────────────────── -->
     <section class="section" id="blog">
       <div class="section__head">
-        <span class="tag">Editorial hub</span>
-        <h2>Research-driven articles for clarity-focused marketers.</h2>
+        <span class="tag">Editorial hub &mdash; powered by NotebookLM</span>
+        <h2>Research-driven articles, tied to product behavior.</h2>
       </div>
       <div class="blog-grid">
-        <a class="blog-card blog-card--featured" href="cognitive-load-clarity.html">
-          <div class="blog-card__img" style="background-image:url('https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?w=720&q=80')"></div>
-          <span class="blog-card__cat">Neuroscience</span>
+        <a class="blog-card" href="cognitive-load-clarity.html">
+          <span class="tag">Article 01</span>
           <h3>Cognitive Load and Why Clear Messaging Wins</h3>
           <p>Why overloaded copy creates friction, and how product rules convert research into better communication.</p>
-          <div class="blog-card__footer"><span class="blog-card__author">Occasus Lab</span><span class="blog-card__date">Jun 2025</span><span class="blog-card__read">6 min read</span></div>
+          <span class="blog-card__cta">Read article &rarr;</span>
         </a>
         <a class="blog-card" href="signal-noise-marketing.html">
-          <div class="blog-card__img" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=720&q=80')"></div>
-          <span class="blog-card__cat">Cybernetics</span>
+          <span class="tag">Article 02</span>
           <h3>Signal vs. Noise: The Cybernetic Filter for Marketing</h3>
           <p>How cybernetics teaches us to amplify signal and dampen noise in every campaign layer.</p>
-          <div class="blog-card__footer"><span class="blog-card__author">Occasus Lab</span><span class="blog-card__date">Jun 2025</span><span class="blog-card__read">8 min read</span></div>
+          <span class="blog-card__cta">Read article &rarr;</span>
         </a>
-        <a class="blog-card" href="blog.html">
-          <div class="blog-card__img" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=720&q=80')"></div>
-          <span class="blog-card__cat">Product</span>
+        <a class="blog-card blog-card--soon" href="blog.html">
+          <span class="tag">Coming soon</span>
           <h3>The Feedback Loop: How Usage Data Improves the Tools</h3>
           <p>A behind-the-scenes look at how Occasus Lab evolves from every rewrite.</p>
-          <div class="blog-card__footer"><span class="blog-card__author">Occasus Lab</span><span class="blog-card__date">Coming soon</span><span class="blog-card__read">5 min read</span></div>
+          <span class="blog-card__cta">View all articles &rarr;</span>
         </a>
       </div>
     </section>
 
     <!-- ── Final CTA ─────────────────────────────── -->
     <section class="cta-banner">
-      <h2>Ready to write with clarity?</h2>
-      <p>10 tools. Daily streaks. Badges that prove you're getting better. Start free.</p>
+      <h2>Ready to cut through the noise?</h2>
+      <p>Start with the Clarity Rewriter&nbsp;&mdash; it takes 10&nbsp;seconds.</p>
       <div class="hero__actions" style="justify-content:center;">
-        <a class="btn btn--primary btn--lg" href="#tools">Open the toolkit</a>
+        <a class="btn btn--primary btn--lg" href="#tools">Try it now</a>
+        <a class="btn btn--ghost btn--lg" href="#pricing">See pricing &rarr;</a>
       </div>
     </section>
   </main>
@@ -610,7 +375,7 @@
     <div class="modal modal--wide">
       <button class="modal__close" onclick="OccApp.closeModals()">&times;</button>
       <h2>Upgrade to Pro</h2>
-      <p>Unlimited access to all 10 tools, saved history, and priority features.</p>
+      <p>Unlimited access to all 5 tools, saved history, and priority features.</p>
       <div class="upgrade-options">
         <button class="upgrade-option" data-plan="monthly" onclick="OccApp.selectPlan('monthly')">
           <strong>€9/month</strong><span>Billed monthly</span>
@@ -622,13 +387,6 @@
       <button class="btn btn--primary btn--lg" style="width:100%;margin-top:1rem;" onclick="OccApp.processUpgrade()">Start Pro plan</button>
       <p class="modal__footer">Secure payment via Google Pay. Cancel anytime.</p>
     </div>
-  </div>
-
-  <!-- ── Badge Modal ──────────────────────────────── -->
-  <div class="badge-modal hidden" id="badge-modal">
-    <div class="badge-modal__icon" id="badge-modal-icon"></div>
-    <h3 id="badge-modal-title"></h3>
-    <p id="badge-modal-desc"></p>
   </div>
 
   <!-- ── Toast Container ─────────────────────────── -->
