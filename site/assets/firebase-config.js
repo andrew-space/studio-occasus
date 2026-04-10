@@ -1,0 +1,30 @@
+/* ═══════════════════════════════════════════════════
+   Firebase Configuration — Occasus Lab
+   ═══════════════════════════════════════════════════
+   SETUP: 1. Go to https://console.firebase.google.com
+          2. Create project "occasus-lab"
+          3. Enable Authentication > Google provider
+          4. Enable Firestore Database
+          5. Add web app, copy config below
+          6. Add your GitHub Pages domain to Authorized Domains
+   ═══════════════════════════════════════════════════ */
+
+var FIREBASE_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+
+/* Freemium limits */
+var FREE_LIMITS = {
+  clarity: 5,
+  brand: 3,
+  utm: 999,
+  tone: 0,
+  headline: 0
+};
+
+var PRO_PRICE = { monthly: 9, yearly: 79, currency: "€" };

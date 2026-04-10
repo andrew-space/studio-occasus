@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Occasus Lab | From Noise to Clarity</title>
-  <meta name="description" content="Occasus Lab turns messy marketing ideas into clear messaging with a Clarity Rewriter, a Brand Message Generator, and a clean editorial content hub.">
+  <meta name="description" content="Research-backed tools for clarity-driven marketing. Rewrite messy copy, generate brand messaging, analyze tone, and score headlines.">
   <meta name="theme-color" content="#f5eddc">
   <meta property="og:title" content="Occasus Lab | From Noise to Clarity">
-  <meta property="og:description" content="Research-backed tools for clarity, positioning, and calm campaign structure.">
+  <meta property="og:description" content="5 tools for clarity, positioning, and calm campaign structure.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/studio-occasus-banner.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,14 +21,29 @@
   <header class="nav" id="nav">
     <div class="nav__inner">
       <a class="nav__brand" href="#top" aria-label="Occasus Lab home">
-        <img src="assets/studio-occasus-logo.png" alt="Studio Occasus" height="40">
+        <img src="assets/studio-occasus-logo.png" alt="Studio Occasus" height="36">
       </a>
       <nav class="nav__links" aria-label="Primary">
         <a href="#tools" class="nav__link">Tools</a>
-        <a href="#system" class="nav__link">System</a>
-        <a href="#blog" class="nav__link">Blog</a>
+        <a href="#pricing" class="nav__link">Pricing</a>
+        <a href="blog.html" class="nav__link">Blog</a>
       </nav>
-      <a class="btn btn--sm" href="#tools">Try it free</a>
+      <div class="nav__auth" id="auth-area">
+        <button class="btn btn--primary btn--sm" id="btn-signin" onclick="OccApp.showAuthModal()">Sign in</button>
+        <div class="avatar-menu hidden" id="avatar-menu">
+          <button class="avatar-btn" id="avatar-btn" aria-label="Account menu" onclick="OccApp.toggleAvatarDrop()">
+            <img id="avatar-img" src="" alt="" width="32" height="32">
+          </button>
+          <div class="avatar-dropdown hidden" id="avatar-dropdown">
+            <p class="avatar-dropdown__name" id="user-name"></p>
+            <p class="avatar-dropdown__email" id="user-email"></p>
+            <hr>
+            <span class="avatar-dropdown__plan" id="user-plan">Free plan</span>
+            <a href="admin.html" class="avatar-dropdown__link hidden" id="admin-link">Admin panel</a>
+            <button class="btn btn--sm btn--ghost" onclick="OccApp.signOut()">Sign out</button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -37,17 +52,19 @@
     <!-- ── Hero ──────────────────────────────────── -->
     <section class="hero">
       <div class="hero__content">
-        <span class="tag">Research-backed tools</span>
+        <span class="tag">Research-backed clarity tools</span>
         <h1>From noise<br>to clarity.</h1>
         <p class="hero__sub">Occasus Lab helps founders and small brands clarify messy ideas, sharpen positioning, and structure campaigns&nbsp;&mdash; with less friction and more signal.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary btn--lg" href="#tools">Try the Clarity Rewriter</a>
-          <a class="btn btn--ghost btn--lg" href="#system">How it works &rarr;</a>
+          <a class="btn btn--primary btn--lg" href="#tools">Try free &mdash; no account needed</a>
+          <a class="btn btn--ghost btn--lg" href="#pricing">See pricing &rarr;</a>
         </div>
         <div class="hero__proof">
           <span class="hero__pill">Clarity Rewriter</span>
           <span class="hero__pill">Brand Message Generator</span>
           <span class="hero__pill">UTM Builder</span>
+          <span class="hero__pill hero__pill--pro">Tone Analyzer <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0L6.12 3.53H9.76L6.82 5.71L7.94 9.24L5 7.06L2.06 9.24L3.18 5.71L0.24 3.53H3.88L5 0Z" fill="currentColor"/></svg></span>
+          <span class="hero__pill hero__pill--pro">Headline Scorer <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0L6.12 3.53H9.76L6.82 5.71L7.94 9.24L5 7.06L2.06 9.24L3.18 5.71L0.24 3.53H3.88L5 0Z" fill="currentColor"/></svg></span>
         </div>
       </div>
       <div class="hero__visual">
@@ -63,11 +80,9 @@
           <div class="demo-card__stats">
             <div><strong>&minus;62%</strong> word count</div>
             <div><strong>3&rarr;1</strong> sentences</div>
+            <div><strong>Grade A</strong> clarity</div>
           </div>
         </div>
-        <figure class="hero__banner">
-          <img src="assets/studio-occasus-banner.jpg" alt="Studio Occasus identity" loading="lazy">
-        </figure>
       </div>
     </section>
 
@@ -75,7 +90,7 @@
     <section class="section" id="tools">
       <div class="section__head">
         <span class="tag">Core tools</span>
-        <h2>Your first three building blocks.</h2>
+        <h2>Five tools for clarity-driven marketing.</h2>
       </div>
 
       <div class="tabs" role="tablist">
@@ -83,30 +98,43 @@
           <span class="tabs__num">01</span> Clarity Rewriter
         </button>
         <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="panel-brand" data-tool="brand">
-          <span class="tabs__num">02</span> Brand Message Generator
+          <span class="tabs__num">02</span> Brand Message
         </button>
         <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="panel-utm" data-tool="utm">
           <span class="tabs__num">03</span> UTM Builder
         </button>
+        <button class="tabs__btn tabs__btn--pro" role="tab" aria-selected="false" aria-controls="panel-tone" data-tool="tone">
+          <span class="tabs__num">04</span> Tone Analyzer <span class="pro-badge">PRO</span>
+        </button>
+        <button class="tabs__btn tabs__btn--pro" role="tab" aria-selected="false" aria-controls="panel-headline" data-tool="headline">
+          <span class="tabs__num">05</span> Headline Scorer <span class="pro-badge">PRO</span>
+        </button>
+      </div>
+
+      <!-- Usage meter -->
+      <div class="usage-bar" id="usage-bar">
+        <span class="usage-bar__text" id="usage-text">5 free uses left today</span>
+        <div class="usage-bar__track"><div class="usage-bar__fill" id="usage-fill" style="width:0%"></div></div>
+        <a href="#pricing" class="usage-bar__link">Upgrade for unlimited &rarr;</a>
       </div>
 
       <!-- Panel: Clarity Rewriter -->
       <div class="panel panel--active" id="panel-clarity" role="tabpanel">
-        <div class="panel__intro">
-          <p>Paste a dense marketing paragraph. The tool removes filler, simplifies jargon, tightens sentence flow, and gives you a cleaner version immediately.</p>
-          <span class="badge">Functional MVP</span>
-        </div>
         <div class="panel__grid">
           <form class="form" id="clarity-form">
             <label for="clarity-input">Your original text</label>
-            <textarea id="clarity-input" name="clarity-input" rows="8">We are a cutting-edge full-spectrum solution designed to empower mission-aligned brands with a holistic communication framework that leverages high-value storytelling, strategic differentiation, and scalable audience engagement across the digital ecosystem.</textarea>
+            <textarea id="clarity-input" name="clarity-input" rows="7" placeholder="Paste messy marketing copy here...">We are a cutting-edge full-spectrum solution designed to empower mission-aligned brands with a holistic communication framework that leverages high-value storytelling, strategic differentiation, and scalable audience engagement across the digital ecosystem.</textarea>
             <div class="form__actions">
-              <button class="btn btn--primary" type="submit">Rewrite for clarity</button>
+              <button class="btn btn--primary" type="button" id="btn-clarity">Rewrite for clarity</button>
               <button class="btn btn--ghost" type="button" id="clarity-sample">Load example</button>
             </div>
           </form>
           <div class="results">
-            <div class="metrics" id="clarity-metrics" aria-live="polite"></div>
+            <div class="metrics" id="clarity-metrics" aria-live="polite">
+              <div class="metric"><span>Jargon replaced</span><strong id="clarity-jargon">&mdash;</strong></div>
+              <div class="metric"><span>Fillers removed</span><strong id="clarity-fillers">&mdash;</strong></div>
+              <div class="metric"><span>Reduction</span><strong id="clarity-reduction">&mdash;</strong></div>
+            </div>
             <div class="result-card">
               <span class="result-card__label">Rewritten version</span>
               <div id="clarity-output" aria-live="polite"></div>
@@ -121,12 +149,10 @@
 
       <!-- Panel: Brand Message Generator -->
       <div class="panel" id="panel-brand" role="tabpanel">
-        <div class="panel__intro">
-          <p>Answer five questions about your brand. Get a positioning statement, value proposition, and homepage lead&nbsp;&mdash; instantly.</p>
-          <span class="badge badge--soft">Guided output</span>
-        </div>
         <div class="panel__grid">
           <form class="form" id="brand-form">
+            <label for="brand-product">Product name</label>
+            <input id="brand-product" name="brand-product" type="text" value="Occasus Lab">
             <label for="audience">Audience</label>
             <input id="audience" name="audience" type="text" value="founders with a strong offer but fuzzy messaging">
             <label for="problem">Main problem</label>
@@ -136,7 +162,7 @@
             <label for="difference">Key difference</label>
             <input id="difference" name="difference" type="text" value="a research-backed method focused on signal, not hype">
             <label for="proof">Proof or credibility</label>
-            <input id="proof" name="proof" type="text" value="clarity principles grounded in neuroscience, cybernetics, and real marketing practice">
+            <input id="proof" name="proof" type="text" value="clarity principles grounded in neuroscience and real marketing practice">
             <label for="tone">Tone</label>
             <select id="tone" name="tone">
               <option value="calm">Calm and editorial</option>
@@ -144,32 +170,20 @@
               <option value="warm">Warm and human</option>
             </select>
             <div class="form__actions">
-              <button class="btn btn--primary" type="submit">Generate messaging</button>
+              <button class="btn btn--primary" type="button" id="btn-brand">Generate messaging</button>
             </div>
           </form>
           <div class="results">
-            <div class="result-card">
-              <span class="result-card__label">Positioning statement</span>
-              <p id="positioning-output"></p>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Value proposition</span>
-              <p id="value-output"></p>
-            </div>
-            <div class="result-card">
-              <span class="result-card__label">Homepage lead</span>
-              <p id="lead-output"></p>
-            </div>
+            <div class="result-card"><span class="result-card__label">Positioning statement</span><p id="positioning-output"></p></div>
+            <div class="result-card"><span class="result-card__label">Value proposition</span><p id="value-output"></p></div>
+            <div class="result-card"><span class="result-card__label">Homepage lead</span><p id="lead-output"></p></div>
+            <div class="result-card result-card--accent"><span class="result-card__label">Call to action</span><p id="brand-cta"></p></div>
           </div>
         </div>
       </div>
 
       <!-- Panel: UTM Builder -->
       <div class="panel" id="panel-utm" role="tabpanel">
-        <div class="panel__intro">
-          <p>Build clean, trackable campaign URLs. No more guessing which link drove traffic.</p>
-          <span class="badge badge--soft">SEO entry point</span>
-        </div>
         <div class="panel__grid">
           <form class="form" id="utm-form">
             <label for="base-url">Base URL</label>
@@ -185,19 +199,63 @@
             <label for="utm-term">Term</label>
             <input id="utm-term" name="utm-term" type="text" value="brand-clarity">
             <div class="form__actions">
-              <button class="btn btn--primary" type="submit">Build URL</button>
+              <button class="btn btn--primary" type="button" id="btn-utm">Build URL</button>
               <button class="btn btn--ghost" type="button" id="utm-copy">Copy result</button>
             </div>
           </form>
           <div class="results">
-            <div class="result-card">
-              <span class="result-card__label">Generated URL</span>
-              <p id="utm-output" class="mono"></p>
+            <div class="result-card"><span class="result-card__label">Generated URL</span><p id="utm-output" class="mono"></p></div>
+            <div class="result-card result-card--accent"><span class="result-card__label">Why it matters</span><p>Clear tracking keeps SEO, campaigns, and product learning tied together.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Tone Analyzer (PRO) -->
+      <div class="panel" id="panel-tone" role="tabpanel">
+        <div class="panel__grid">
+          <form class="form" id="tone-form">
+            <div class="pro-gate" id="tone-gate">
+              <span class="pro-gate__badge">PRO</span>
+              <p>Tone Analyzer breaks down your text into formal, casual, technical, and persuasive signals.</p>
+              <button class="btn btn--primary" type="button" onclick="OccApp.showUpgradeModal()">Unlock with Pro</button>
             </div>
-            <div class="result-card result-card--accent">
-              <span class="result-card__label">Why it matters</span>
-              <p>Clear tracking keeps SEO, campaigns, and product learning tied together without extra operational noise.</p>
+            <label for="tone-input">Paste your text</label>
+            <textarea id="tone-input" name="tone-input" rows="7" placeholder="Paste marketing copy, email, or landing page text..."></textarea>
+            <div class="form__actions">
+              <button class="btn btn--primary" type="button" id="btn-tone">Analyze tone</button>
             </div>
+          </form>
+          <div class="results">
+            <div class="result-card"><span class="result-card__label">Tone breakdown</span><div id="tone-output"></div></div>
+            <div class="result-card"><span class="result-card__label">Recommendation</span><p id="tone-advice"></p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Headline Scorer (PRO) -->
+      <div class="panel" id="panel-headline" role="tabpanel">
+        <div class="panel__grid">
+          <form class="form" id="headline-form">
+            <div class="pro-gate" id="headline-gate">
+              <span class="pro-gate__badge">PRO</span>
+              <p>Score your headlines on clarity, emotional impact, power words, and length.</p>
+              <button class="btn btn--primary" type="button" onclick="OccApp.showUpgradeModal()">Unlock with Pro</button>
+            </div>
+            <label for="headline-input">Enter your headline</label>
+            <input id="headline-input" name="headline-input" type="text" placeholder="e.g. How to write copy that converts in 30 seconds">
+            <label for="headline-input-2">Alternative (optional)</label>
+            <input id="headline-input-2" name="headline-input-2" type="text" placeholder="Compare with a second headline">
+            <div class="form__actions">
+              <button class="btn btn--primary" type="button" id="btn-headline">Score headlines</button>
+            </div>
+          </form>
+          <div class="results">
+            <div id="headline-result-1"></div>
+            <div id="headline-result-2-wrap" class="hidden">
+              <h4 style="margin:1rem 0 .5rem;">Headline B</h4>
+              <div id="headline-result-2"></div>
+            </div>
+            <p id="headline-winner" style="font-weight:600;margin-top:.75rem;"></p>
           </div>
         </div>
       </div>
@@ -211,80 +269,149 @@
           <h2>A loop that turns research into product rules.</h2>
         </div>
         <div class="flow">
-          <div class="flow__step">
-            <span class="flow__num">01</span>
-            <h3>Research</h3>
-            <p>Collect insights from neuroscience, cybernetics, and marketing.</p>
-          </div>
+          <div class="flow__step"><span class="flow__num">01</span><h3>Research</h3><p>Insights from neuroscience, cybernetics, and marketing.</p></div>
           <span class="flow__arrow">&rarr;</span>
-          <div class="flow__step">
-            <span class="flow__num">02</span>
-            <h3>Translate</h3>
-            <p>Turn academic ideas into simple operating principles.</p>
-          </div>
+          <div class="flow__step"><span class="flow__num">02</span><h3>Synthesize</h3><p>NotebookLM transforms raw papers into knowledge bases.</p></div>
           <span class="flow__arrow">&rarr;</span>
-          <div class="flow__step">
-            <span class="flow__num">03</span>
-            <h3>Apply</h3>
-            <p>Update tools, prompts, and writing rules with concrete product logic.</p>
-          </div>
+          <div class="flow__step"><span class="flow__num">03</span><h3>Apply</h3><p>Update tools, prompts, and writing rules with product logic.</p></div>
           <span class="flow__arrow">&rarr;</span>
-          <div class="flow__step">
-            <span class="flow__num">04</span>
-            <h3>Publish</h3>
-            <p>Feed the blog, improve SEO, and create a learning loop.</p>
-          </div>
+          <div class="flow__step"><span class="flow__num">04</span><h3>Publish</h3><p>Feed the blog, improve SEO, create a learning loop.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ── CTA Banner ────────────────────────────── -->
+    <!-- ── Pricing ───────────────────────────────── -->
+    <section class="section" id="pricing">
+      <div class="section__head" style="text-align:center;margin:0 auto;">
+        <span class="tag">Simple pricing</span>
+        <h2 style="max-width:none;">Use for free. Upgrade when you need more.</h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Free</h3>
+          <p class="pricing-card__price"><span class="pricing-card__amount">€0</span>/month</p>
+          <ul class="pricing-card__features">
+            <li class="yes">5 Clarity Rewrites / day</li>
+            <li class="yes">3 Brand Messages / day</li>
+            <li class="yes">Unlimited UTM Builder</li>
+            <li class="no">Tone Analyzer</li>
+            <li class="no">Headline Scorer</li>
+            <li class="no">Save &amp; export history</li>
+          </ul>
+          <a class="btn btn--ghost" href="#tools">Start free</a>
+        </div>
+        <div class="pricing-card pricing-card--pro">
+          <span class="pricing-card__badge">Most popular</span>
+          <h3>Pro</h3>
+          <p class="pricing-card__price"><span class="pricing-card__amount">€9</span>/month</p>
+          <ul class="pricing-card__features">
+            <li class="yes">Unlimited Clarity Rewrites</li>
+            <li class="yes">Unlimited Brand Messages</li>
+            <li class="yes">Unlimited UTM Builder</li>
+            <li class="yes">Tone Analyzer</li>
+            <li class="yes">Headline Scorer</li>
+            <li class="yes">Save &amp; export history</li>
+          </ul>
+          <button class="btn btn--primary btn--lg" onclick="OccApp.showUpgradeModal()">Upgrade to Pro</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Blog Preview ──────────────────────────── -->
+    <section class="section" id="blog">
+      <div class="section__head">
+        <span class="tag">Editorial hub &mdash; powered by NotebookLM</span>
+        <h2>Research-driven articles, tied to product behavior.</h2>
+      </div>
+      <div class="blog-grid">
+        <a class="blog-card" href="cognitive-load-clarity.html">
+          <span class="tag">Article 01</span>
+          <h3>Cognitive Load and Why Clear Messaging Wins</h3>
+          <p>Why overloaded copy creates friction, and how product rules convert research into better communication.</p>
+          <span class="blog-card__cta">Read article &rarr;</span>
+        </a>
+        <a class="blog-card" href="signal-noise-marketing.html">
+          <span class="tag">Article 02</span>
+          <h3>Signal vs. Noise: The Cybernetic Filter for Marketing</h3>
+          <p>How cybernetics teaches us to amplify signal and dampen noise in every campaign layer.</p>
+          <span class="blog-card__cta">Read article &rarr;</span>
+        </a>
+        <a class="blog-card blog-card--soon" href="blog.html">
+          <span class="tag">Coming soon</span>
+          <h3>The Feedback Loop: How Usage Data Improves the Tools</h3>
+          <p>A behind-the-scenes look at how Occasus Lab evolves from every rewrite.</p>
+          <span class="blog-card__cta">View all articles &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── Final CTA ─────────────────────────────── -->
     <section class="cta-banner">
       <h2>Ready to cut through the noise?</h2>
       <p>Start with the Clarity Rewriter&nbsp;&mdash; it takes 10&nbsp;seconds.</p>
-      <a class="btn btn--primary btn--lg" href="#tools">Try it now</a>
-    </section>
-
-    <!-- ── Blog ──────────────────────────────────── -->
-    <section class="section" id="blog">
-      <div class="section__head">
-        <span class="tag">Editorial hub</span>
-        <h2>One article per week, tied directly to product behavior.</h2>
+      <div class="hero__actions" style="justify-content:center;">
+        <a class="btn btn--primary btn--lg" href="#tools">Try it now</a>
+        <a class="btn btn--ghost btn--lg" href="#pricing">See pricing &rarr;</a>
       </div>
-      <article class="article-card">
-        <div class="article-card__content">
-          <span class="tag">Article 01</span>
-          <h3>Cognitive Load and Why Clear Messaging Wins</h3>
-          <p>A practical reading of cognitive load: what it means, why overloaded copy creates friction, and how product rules can convert research into better communication.</p>
-          <a class="btn btn--primary" href="cognitive-load-clarity.html">Read article &rarr;</a>
-        </div>
-        <div class="article-card__meta">
-          <div><strong>Scientific concept</strong><br>Cognitive load</div>
-          <div><strong>Marketing application</strong><br>Shorter sentences, fewer claims</div>
-          <div><strong>Product integration</strong><br>Feeds the Clarity Rewriter rules</div>
-        </div>
-      </article>
     </section>
-
   </main>
+
+  <!-- ── Auth Modal ──────────────────────────────── -->
+  <div class="modal-backdrop hidden" id="auth-modal">
+    <div class="modal">
+      <button class="modal__close" onclick="OccApp.closeModals()">&times;</button>
+      <h2>Sign in to Occasus Lab</h2>
+      <p>Save your work, unlock Pro features, and access your history across devices.</p>
+      <button class="btn-google" id="btn-google-signin" onclick="OccApp.googleSignIn()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.997 8.997 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+      <p class="modal__footer">Free plan activates instantly. Upgrade anytime.</p>
+    </div>
+  </div>
+
+  <!-- ── Upgrade Modal ───────────────────────────── -->
+  <div class="modal-backdrop hidden" id="upgrade-modal">
+    <div class="modal modal--wide">
+      <button class="modal__close" onclick="OccApp.closeModals()">&times;</button>
+      <h2>Upgrade to Pro</h2>
+      <p>Unlimited access to all 5 tools, saved history, and priority features.</p>
+      <div class="upgrade-options">
+        <button class="upgrade-option" data-plan="monthly" onclick="OccApp.selectPlan('monthly')">
+          <strong>€9/month</strong><span>Billed monthly</span>
+        </button>
+        <button class="upgrade-option upgrade-option--active" data-plan="yearly" onclick="OccApp.selectPlan('yearly')">
+          <strong>€79/year</strong><span>Save 27%</span><span class="pro-badge">Best value</span>
+        </button>
+      </div>
+      <button class="btn btn--primary btn--lg" style="width:100%;margin-top:1rem;" onclick="OccApp.processUpgrade()">Start Pro plan</button>
+      <p class="modal__footer">Secure payment via Google Pay. Cancel anytime.</p>
+    </div>
+  </div>
+
+  <!-- ── Toast Container ─────────────────────────── -->
+  <div class="toast-container" id="toast-container"></div>
 
   <!-- ── Footer ──────────────────────────────────── -->
   <footer class="footer">
     <div class="footer__inner">
       <div class="footer__brand">
-        <img src="assets/studio-occasus-logo.png" alt="Studio Occasus" height="32">
+        <img src="assets/studio-occasus-logo.png" alt="Studio Occasus" height="28">
         <p>Occasus Lab MVP &mdash; Round 5 App Showcase</p>
       </div>
       <div class="footer__links">
         <a href="#tools">Tools</a>
-        <a href="#system">System</a>
-        <a href="#blog">Blog</a>
-        <a href="cognitive-load-clarity.html">Article</a>
+        <a href="#pricing">Pricing</a>
+        <a href="blog.html">Blog</a>
+        <a href="admin.html">Admin</a>
       </div>
     </div>
-    <p class="footer__copy">Clarity, usefulness, and durable structure over noise.</p>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="assets/firebase-config.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>
