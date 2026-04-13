@@ -222,3 +222,98 @@ If no, do not build it.
 8. Pause all public NotebookLM references until editorial pipeline quality is verified.
 9. Connect every blog article to one product experiment and one measurable conversion hypothesis.
 10. Create one weekly "proof block" on homepage: what changed in product because of user feedback.
+
+---
+
+## Autonomous Team Loop (Human-Like Squad Mode)
+
+### Objective
+
+Run Studio Occasus as a self-improving product team where agents:
+- detect improvement opportunities,
+- prioritize by impact,
+- implement directly when safe,
+- report outcomes in a recurring reunion loop.
+
+### Operating cadence
+
+1. **Daily micro-cycle (Auto Run):** detect -> rank -> ship small safe improvements.
+2. **Weekly reunion (Manager-led):** review impact, decide next sprint priorities, reset focus.
+3. **Release checkpoint:** keep dependency gates A->E for medium/high-risk changes.
+
+### Autonomous loop (Agent 12 command sequence)
+
+1. **Signal collection**
+- Agent 11 aggregates: user friction, failed flows, translation issues, review findings, deploy incidents.
+
+2. **Opportunity triage**
+- Agent 12 scores each candidate on:
+	- user impact,
+	- trust risk,
+	- conversion effect,
+	- implementation complexity.
+
+3. **Auto-apply eligibility test**
+- A task can be auto-applied only if all are true:
+	- low technical risk,
+	- no auth/billing/security rule changes,
+	- no data model migration,
+	- easy rollback,
+	- clear pass/fail validation.
+
+4. **Execution routing**
+- Agent 12 assigns smallest team and explicit done criteria.
+- Agent 6 review is mandatory before close when UX or trust changes.
+
+5. **Validation + publish**
+- Agent 5 validates smoke checks and release checklist.
+- Agent 12 marks shipped, deferred, or blocked.
+
+6. **Learning capture**
+- Agent 11 writes what improved, what failed, and what to repeat/avoid.
+
+### Auto-Apply policy (strict)
+
+**Auto-apply allowed:**
+- copy/microcopy clarity,
+- UI hierarchy/readability,
+- localization fixes,
+- minor tool UX improvements,
+- non-sensitive bug fixes.
+
+**Human approval required before apply:**
+- auth logic,
+- billing and Stripe,
+- Firestore rules,
+- deploy pipeline,
+- destructive operations,
+- legal/privacy sensitive text.
+
+### Weekly reunion template
+
+```
+Reunion Type: Autonomous Improvement Review
+Window: Last 7 days
+
+1) Shipped improvements (with evidence)
+2) Missed issues and why review missed them
+3) Metrics delta (activation, repeat usage, upgrade intent, trust)
+4) Top 5 opportunities for next cycle
+5) Sprint commitment with owners and done criteria
+```
+
+### Manager start prompt (Mode F)
+
+```
+Mode: F - Autonomous Improvement Loop.
+Goal: maximize clarity outcome, trust, and conversion with smallest safe changes.
+
+Process:
+1) Collect signals from logs, review findings, UX friction, and translation quality.
+2) Rank opportunities by impact/risk.
+3) Auto-apply only low-risk changes.
+4) Route medium/high-risk items to gated flow (A->E).
+5) Publish weekly reunion report with shipped outcomes and next sprint backlog.
+
+Rule: If a task touches auth, billing, security, or deploy, stop auto-apply and require explicit approval.
+```
