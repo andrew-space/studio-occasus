@@ -234,6 +234,12 @@ This file is the running history for Studio Occasus (personal project). It shoul
 - Includes daily micro-cycle, auto-apply checklist, validation checklist, weekly reunion template, and manager kickoff script.
 - Linked runbook into Team Manager and collaboration protocol to keep Mode F executable, not theoretical.
 
+## 2026-04-14 - Four-week autonomous simulation prepared
+
+- Added `agents/autonomous-4week-simulation.md` to simulate a full 4-week autonomous cycle with weekly outcomes and reunion checkpoints.
+- Added `agents/stripe-readiness-gate.md` as the single gate document for Stripe Go or No-Go validation.
+- Current Stripe decision status recorded as Conditional Go pending final live end-to-end checks.
+
 - Agent 12 activated a dependency-gated deployment mission aligned to the strategic reunion decisions.
 - Execution mode selected: Mode E (new version deployment).
 - Gate A opened: Product/copy lock handled by Agent 1 + Agent 4.
