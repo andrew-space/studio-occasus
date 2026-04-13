@@ -6,7 +6,36 @@
   var db = null;
   var auth = null;
   var currentUser = null;
-  var ADMIN_EMAILS = ["andrew.neuburger@community.isunet.edu", "andrew.neuburger@isunet.edu"];
+
+  function normalizeEmail(email) {
+    return String(email || "").trim().toLowerCase();
+  }
+
+  function getAdminAccess() {
+    var fallback = {
+      emails: ["andrew.neuburger@community.isunet.edu", "andrew.neuburger@isunet.edu"],
+      domains: ["community.isunet.edu", "isunet.edu"]
+    };
+    var cfg = (typeof ADMIN_ACCESS !== "undefined" && ADMIN_ACCESS) ? ADMIN_ACCESS : fallback;
+    var emails = (Array.isArray(cfg.emails) ? cfg.emails : fallback.emails)
+      .map(normalizeEmail)
+      .filter(Boolean);
+    var domains = (Array.isArray(cfg.domains) ? cfg.domains : fallback.domains)
+      .map(function (d) { return String(d || "").trim().toLowerCase(); })
+      .filter(Boolean);
+    return { emails: emails, domains: domains };
+  }
+
+  function isAllowedAdminEmail(email) {
+    var safe = normalizeEmail(email);
+    if (!safe) return false;
+    var access = getAdminAccess();
+    if (access.emails.indexOf(safe) !== -1) return true;
+    var at = safe.lastIndexOf("@");
+    if (at === -1) return false;
+    var domain = safe.slice(at + 1);
+    return access.domains.indexOf(domain) !== -1;
+  }
 
   function mapAuthError(err) {
     if (!err || !err.code) return "Sign-in error.";
@@ -30,18 +59,33 @@
     db = firebase.firestore();
 
     auth.onAuthStateChanged(function (user) {
-      if (user && ADMIN_EMAILS.indexOf(user.email) !== -1) {
-        currentUser = user;
-        document.getElementById("admin-gate").classList.add("hidden");
-        document.getElementById("admin-dashboard").classList.remove("hidden");
-        loadDashboard();
-      } else if (user) {
-        document.getElementById("admin-gate").innerHTML =
-          "<h2>Access Denied</h2><p>" + user.email + " is not an admin. <button class='btn btn--sm btn--ghost' onclick='firebase.auth().signOut()'>Sign out</button></p>";
-      } else {
+      if (!user) {
         document.getElementById("admin-gate").classList.remove("hidden");
         document.getElementById("admin-dashboard").classList.add("hidden");
+        return;
       }
+
+      user.getIdTokenResult().then(function (tokenResult) {
+        var byEmail = isAllowedAdminEmail(user.email);
+        var byClaim = !!(tokenResult && tokenResult.claims && tokenResult.claims.admin === true);
+        if (byEmail || byClaim) {
+          currentUser = user;
+          document.getElementById("admin-gate").classList.add("hidden");
+          document.getElementById("admin-dashboard").classList.remove("hidden");
+          loadDashboard();
+          return;
+        }
+
+        var access = getAdminAccess();
+        document.getElementById("admin-gate").innerHTML =
+          "<h2>Access Denied</h2><p>" + esc(user.email || "") + " is not an admin.</p>" +
+          "<p style='color:var(--muted);font-size:.9rem'>Allowed emails: " + esc(access.emails.join(", ")) + "</p>" +
+          "<p style='color:var(--muted);font-size:.9rem'>Allowed domains: " + esc(access.domains.join(", ")) + "</p>" +
+          "<p><button class='btn btn--sm btn--ghost' onclick='firebase.auth().signOut()'>Sign out</button></p>";
+      }).catch(function () {
+        document.getElementById("admin-gate").innerHTML =
+          "<h2>Access Check Failed</h2><p>Unable to verify admin claims. Please sign in again.</p>";
+      });
     });
 
     document.getElementById("admin-google-signin").addEventListener("click", function () {

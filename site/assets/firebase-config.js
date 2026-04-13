@@ -34,6 +34,18 @@ var FREE_LIMITS = {
 
 var PRO_PRICE = { monthly: 18, yearly: 180, currency: "€" };
 
+/* Admin access policy for app + admin panel */
+var ADMIN_ACCESS = {
+  emails: [
+    "andrew.neuburger@community.isunet.edu",
+    "andrew.neuburger@isunet.edu"
+  ],
+  domains: [
+    "community.isunet.edu",
+    "isunet.edu"
+  ]
+};
+
 /* Server-side billing endpoint (Firebase Functions) */
 var BACKEND_CONFIG = {
   checkoutEndpoint: "https://europe-west1-studio-occasus.cloudfunctions.net/createCheckoutSession"

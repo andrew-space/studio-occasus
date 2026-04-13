@@ -175,6 +175,36 @@
     return currentLang === "fr" ? frText : enText;
   }
 
+  function normalizeEmail(email) {
+    return String(email || "").trim().toLowerCase();
+  }
+
+  function getAdminAccess() {
+    var fallback = {
+      emails: ["andrew.neuburger@community.isunet.edu", "andrew.neuburger@isunet.edu"],
+      domains: ["community.isunet.edu", "isunet.edu"]
+    };
+    var cfg = (typeof ADMIN_ACCESS !== "undefined" && ADMIN_ACCESS) ? ADMIN_ACCESS : fallback;
+    var emails = (Array.isArray(cfg.emails) ? cfg.emails : fallback.emails)
+      .map(normalizeEmail)
+      .filter(Boolean);
+    var domains = (Array.isArray(cfg.domains) ? cfg.domains : fallback.domains)
+      .map(function (d) { return String(d || "").trim().toLowerCase(); })
+      .filter(Boolean);
+    return { emails: emails, domains: domains };
+  }
+
+  function isAllowedAdminEmail(email) {
+    var safe = normalizeEmail(email);
+    if (!safe) return false;
+    var access = getAdminAccess();
+    if (access.emails.indexOf(safe) !== -1) return true;
+    var at = safe.lastIndexOf("@");
+    if (at === -1) return false;
+    var domain = safe.slice(at + 1);
+    return access.domains.indexOf(domain) !== -1;
+  }
+
   function applyToolButtonLabels() {
     document.querySelectorAll(".tabs__btn").forEach(function (btn, index) {
       var label = currentLang === "fr" ? btn.dataset.labelFr : btn.dataset.labelEn;
@@ -596,16 +626,16 @@
       if (dropName) dropName.textContent = currentUser.displayName || "";
       if (dropEmail) dropEmail.textContent = currentUser.email || "";
       if (dropPlan) dropPlan.textContent = isPro ? "Pro Plan" : t("freePlan");
-      /* Show admin link for whitelisted emails */
       var adminLink = document.getElementById("admin-link");
-      var ADMIN_EMAILS = ["andrew.neuburger@community.isunet.edu", "andrew.neuburger@isunet.edu"];
       if (adminLink) {
         adminLink.textContent = t("adminPanel");
-        if (ADMIN_EMAILS.indexOf(currentUser.email) !== -1) adminLink.classList.remove("hidden");
+        adminLink.classList.toggle("hidden", !isAllowedAdminEmail(currentUser.email));
       }
     } else {
       signInBtn.classList.remove("hidden");
       avatarMenu.classList.add("hidden");
+      var adminLinkLoggedOut = document.getElementById("admin-link");
+      if (adminLinkLoggedOut) adminLinkLoggedOut.classList.add("hidden");
     }
   }
 
