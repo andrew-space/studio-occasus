@@ -1,4 +1,4 @@
-# Round 5 - Studio Occasus
+# Studio Occasus
 
 ## Brief
 
@@ -18,12 +18,14 @@ This round is a full MVP web app showcase. The app does not need to be perfect, 
 
 ## Current Status
 
-- Round 5 folder created.
-- Working structure initialized for docs, agents, and site assets.
-- App concept derived from the product brief.
-- MVP first build completed in `site/`.
-- Repository created: `https://github.com/andrew-space/ai-challenge-round5-studio-occasus`
-- Expected live URL: `https://andrew-space.github.io/ai-challenge-round5-studio-occasus/`
+- Moved from `AI Challenge Arena/Round 5` to personal project in `studio occasus/` (2026-04-13).
+- Working structure: docs, agents, and site assets.
+- App concept: Research-backed clarity messaging service.
+- Advanced MVP live in `site/`.
+- Verified production repo: `https://github.com/andrew-space/studio-occasus`
+- Verified live URL: `https://andrew-space.github.io/studio-occasus/`
+- Firebase Google Sign-In connected to project `studio-occasus`.
+- Dynamic branded background, guided tool workspace, and EN/FR switch published.
 
 ## Product Direction
 
@@ -55,6 +57,7 @@ Paste unclear marketing copy into the Clarity Rewriter and instantly get a clean
 - `site/` for the actual MVP to deploy
 - `site/assets/` for CSS, JS, images, and reusable frontend assets
 - `Studio Occasus Assets/` for source material already present in the round folder
+- `backups/` for local rollback snapshots created before risky deploys
 
 ## Immediate Goal
 
@@ -68,5 +71,17 @@ Current implementation now covers:
 2. functional Clarity Rewriter,
 3. functional Brand Message Generator,
 4. functional UTM Builder,
-5. first blog article,
-6. GitHub Pages workflow scaffold.
+5. additional marketing tools with gamification,
+6. live Firebase auth,
+7. bilingual EN/FR shell,
+8. GitHub Pages deployment live.
+
+## Recommended Next Session
+
+1. Extend EN/FR coverage to blog pages and admin panel.
+2. Further polish result-card UX and tool guidance copy.
+3. Resume Stripe/backend only when the frontend shell is considered stable.
+4. Use the new learning-enablement agent to structure onboarding and first-use guidance across core tools.
+5. Use the new team-manager and memory-orchestrator agents to keep future multi-agent work coherent across sessions.
+6. Use `agents/mission-01-guided-onboarding.md` as the first managed mission for the new team structure.
+7. Run a local backup before risky deploys with `scripts/project-backup.ps1` and keep `BACKUP-RESTORE.md` as the restore reference.

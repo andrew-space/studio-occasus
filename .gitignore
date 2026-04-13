@@ -24,3 +24,6 @@ Thumbs.db
 # Generated outputs
 site/data/generated/
 research_pipeline/generated/
+
+# Local rollback snapshots
+backups/

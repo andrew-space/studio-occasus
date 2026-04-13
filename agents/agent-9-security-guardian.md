@@ -2,7 +2,7 @@
 
 ## Mission
 
-Protect Round 5 against security regressions and API bad practices at every iteration.
+Protect Studio Occasus against security regressions and API bad practices at every iteration.
 
 ## Scope
 
@@ -27,6 +27,7 @@ Protect Round 5 against security regressions and API bad practices at every iter
 3. Stripe checkout session creation requires valid Firebase ID token
 4. Stripe webhook signature validation is active
 5. Webhook processing is idempotent (event replay safe)
+6. A local rollback snapshot exists for the current release candidate (`scripts/project-backup.ps1`).
 
 ## Round 3 carry-over rules
 
@@ -39,6 +40,7 @@ Protect Round 5 against security regressions and API bad practices at every iter
 
 - CI workflow: `.github/workflows/security-guardian.yml`
 - Local script: `scripts/security-scan.ps1`
+- Local rollback tools: `scripts/project-backup.ps1` and `scripts/project-restore.ps1`
 
 ## Escalation policy
 
@@ -52,3 +54,9 @@ If any mandatory check fails, block release and report exact file, line, and rem
 1. Verify no real secret was inserted when filling Firebase config.
 2. Verify Stripe env vars are set only in runtime environment, never committed.
 3. Re-run security workflow and confirm green before any release tag.
+
+## Handoff - 2026-04-13 (Backup Layer Added)
+
+- Local rollback support now exists through `scripts/project-backup.ps1` and `scripts/project-restore.ps1`.
+- Security-sensitive deploys should create a labeled backup before push or release.
+- Recovery instructions live in `BACKUP-RESTORE.md`.

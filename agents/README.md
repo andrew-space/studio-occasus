@@ -1,4 +1,4 @@
-# Round 5 Agent Playbook
+# Studio Occasus Agent Playbook
 
 ## Mission
 
@@ -41,6 +41,9 @@ The fastest demo flow is: paste weak copy into the Clarity Rewriter, show the im
 | Agent 7 - Blog + NotebookLM Lead | Operate editorial pipeline from research to publishable drafts |
 | Agent 8 - Backend Architect | Design auth, data, and payment architecture with production constraints |
 | Agent 9 - Security Guardian | Enforce security checks, API hygiene, and release-blocking safeguards |
+| Agent 10 - Learning Enablement | Design onboarding, guided usage, and progressive learning flows |
+| Agent 11 - Memory Orchestrator | Capture relevant progress and relay reusable knowledge across agents |
+| Agent 12 - Team Manager | Guide delegation, sequencing, and reliability across the full agent team |
 
 ## Status Snapshot
 
@@ -50,8 +53,10 @@ The fastest demo flow is: paste weak copy into the Clarity Rewriter, show the im
 | Folder scaffold | ✅ |
 | Concept selected | ✅ |
 | MVP scope locked | ✅ |
-| App implementation | ✅ First build complete |
-| GitHub Pages deployment | ⏳ Publishing in progress |
+| App implementation | ✅ Advanced MVP live |
+| Firebase Auth | ✅ Google Sign-In live |
+| GitHub Pages deployment | ✅ Live and verified |
+| EN/FR switch | ✅ Main shell + key tools |
 
 ## Operating Rules
 
@@ -59,6 +64,9 @@ The fastest demo flow is: paste weak copy into the Clarity Rewriter, show the im
 - Design for GitHub Pages constraints: static hosting, client-side logic, public assets only.
 - Prefer stable browser-native features over fragile integrations.
 - Every major change gets added to `agents/agent-log.md`.
+- Agent 11 owns cross-session and cross-agent knowledge transfer quality.
+- Agent 12 owns team composition, delegation order, and delivery discipline.
+- Use `agents/team-collaboration-protocol.md` as the default operating framework.
 
 ## Build Priorities
 
@@ -76,11 +84,28 @@ The fastest demo flow is: paste weak copy into the Clarity Rewriter, show the im
 - UTM Builder for campaign hygiene
 - First blog article connected to the product logic
 - GitHub Pages workflow prepared in `.github/workflows/deploy.yml`
-- Canonical GitHub repo: `https://github.com/andrew-space/occasus-lab`
+- Firebase Google Auth connected to project `studio-occasus`
+- Dynamic branded background using Occasus visual assets
+- Guided tools workspace with prev/next navigation and mobile selector
+- Persistent EN/FR language switch in the main app shell
+- Dedicated learning-enablement agent for onboarding and product guidance
+- Memory orchestration layer for preserving relevant team learning
+- Team manager layer for multi-agent coordination and role clarity
+- Current verified repo: `https://github.com/andrew-space/studio-occasus`
+- Current verified live URL: `https://andrew-space.github.io/studio-occasus/`
 
 ## Handoff Quickstart (Next Session)
 
-1. Open live app: https://andrew-space.github.io/occasus-lab/
-2. Fix Firebase config in `site/assets/firebase-config.js` (currently empty keys).
-3. Run Firebase auth/deploy sequence (`firebase login`, `firebase use --add`, deploy functions/rules).
-4. Run security checks before release (`scripts/security-scan.ps1` and Security Guardian workflow).
+1. Open live app: https://andrew-space.github.io/studio-occasus/
+2. Smoke-test Google Sign-In, language switch, and mobile tools selector.
+3. Extend translations to blog/admin if bilingual launch quality matters.
+4. Revisit Stripe/backend only after frontend polish is stable.
+5. Run security checks before any billing release (`scripts/security-scan.ps1` and Security Guardian workflow).
+6. Use Agent 10 to define a beginner learning path before expanding feature scope again.
+7. Use Agent 12 to choose the smallest effective sub-team for each new objective.
+8. Use Agent 11 to update shared learning after every meaningful session.
+
+## Team Operating Assets
+
+- `agents/team-collaboration-protocol.md` - default collaboration protocol for the 12-agent team
+- `agents/mission-01-guided-onboarding.md` - first Agent 12-led mission focused on guided onboarding for core tools
