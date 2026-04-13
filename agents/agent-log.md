@@ -251,15 +251,14 @@ This file is the running history for Studio Occasus (personal project). It shoul
 - No auth, billing, security rules, or deploy pipeline changes were made in this cycle.
 - Cycle report saved to `agents/mode-f-cycle-2026-04-14.md`.
 
-- Agent 12 activated a dependency-gated deployment mission aligned to the strategic reunion decisions.
-- Execution mode selected: Mode E (new version deployment).
-- Gate A opened: Product/copy lock handled by Agent 1 + Agent 4.
-- Release policy confirmed: no deploy if high-severity review or security findings remain unresolved.
-- Collaboration protocol updated to include Mode E and explicit gate flow.
-- Added `agents/agent-10-learning-enablement.md` to cover onboarding, user progression, and product learning support.
-- New session direction clarified: improve guided usage and learning flow before reopening larger platform expansion.
-- Immediate recommended collaboration path for this session:
-1. Agent 10 defines the beginner journey and helper-copy needs.
+## 2026-04-14 - Mode F run executed for 5 cycles
+
+- Completed a 5-cycle low-risk Mode F execution sequence and shipped all selected fixes.
+- Admin stability improved: prevented duplicate list click bindings and made Pro toggle state deterministic.
+- UX correctness improved: empty Word Counter now shows 0 min instead of 1 min.
+- Accessibility improved: keyboard focus visibility added for tool tabs.
+- FR microcopy quality improved for diagnostic audience-fit label.
+- Run report saved to `agents/mode-f-5cycles-2026-04-14.md`.
 2. Agent 2 translates that into UI/interaction placement.
 3. Agent 3 implements the highest-value onboarding changes in `site/`.
 

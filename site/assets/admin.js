@@ -6,6 +6,8 @@
   var db = null;
   var auth = null;
   var currentUser = null;
+  var articleListBound = false;
+  var usersListBound = false;
 
   function normalizeEmail(email) {
     return String(email || "").trim().toLowerCase();
@@ -165,13 +167,16 @@
         list.appendChild(item);
       });
 
-      list.addEventListener("click", function (e) {
-        var btn = e.target.closest("[data-action]");
-        if (!btn) return;
-        var id = btn.dataset.id;
-        if (btn.dataset.action === "edit") editArticle(id);
-        if (btn.dataset.action === "delete") deleteArticle(id);
-      });
+      if (!articleListBound) {
+        list.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-action]");
+          if (!btn) return;
+          var id = btn.dataset.id;
+          if (btn.dataset.action === "edit") editArticle(id);
+          if (btn.dataset.action === "delete") deleteArticle(id);
+        });
+        articleListBound = true;
+      }
     }).catch(function (err) {
       list.innerHTML = "<p style='color:var(--red)'>Error loading articles: " + err.message + "</p>";
     });
@@ -188,23 +193,27 @@
         var d = doc.data();
         var item = document.createElement("div");
         item.className = "admin__list-item";
+        var nextPro = !d.isPro;
         item.innerHTML =
           "<div><strong>" + esc(d.displayName || "—") + "</strong> <span style='color:var(--muted);font-size:.78rem'>" + esc(d.email || "") + "</span>" +
           (d.isPro ? " <span class='pro-badge'>PRO</span>" : "") + "</div>" +
-          "<button class='btn btn--sm " + (d.isPro ? "btn--ghost" : "btn--primary") + "' data-uid='" + doc.id + "' data-toggle-pro>" +
+          "<button class='btn btn--sm " + (d.isPro ? "btn--ghost" : "btn--primary") + "' data-uid='" + doc.id + "' data-toggle-pro data-set-pro='" + (nextPro ? "true" : "false") + "'>" +
           (d.isPro ? "Remove Pro" : "Grant Pro") + "</button>";
         list.appendChild(item);
       });
 
-      list.addEventListener("click", function (e) {
-        var btn = e.target.closest("[data-toggle-pro]");
-        if (!btn) return;
-        var uid = btn.dataset.uid;
-        var setTo = btn.textContent.trim() === "Grant Pro";
-        db.collection("users").doc(uid).update({ isPro: setTo }).then(function () {
-          loadUsers();
+      if (!usersListBound) {
+        list.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-toggle-pro]");
+          if (!btn) return;
+          var uid = btn.dataset.uid;
+          var setTo = btn.dataset.setPro === "true";
+          db.collection("users").doc(uid).update({ isPro: setTo }).then(function () {
+            loadUsers();
+          });
         });
-      });
+        usersListBound = true;
+      }
     }).catch(function (err) {
       list.innerHTML = "<p style='color:var(--red)'>Error: " + err.message + "</p>";
     });

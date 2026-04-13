@@ -679,7 +679,7 @@
     if (pain === "too-vague") { penalties += 3; gapLabel = currentLang === "fr" ? "Precision" : "Precision"; }
     if (pain === "too-long") { penalties += 2; gapLabel = currentLang === "fr" ? "Concision" : "Concision"; }
     if (pain === "too-generic") { penalties += 3; gapLabel = currentLang === "fr" ? "Differenciation" : "Differentiation"; }
-    if (pain === "wrong-audience") { penalties += 3; gapLabel = currentLang === "fr" ? "Adequation audience" : "Audience fit"; }
+    if (pain === "wrong-audience") { penalties += 3; gapLabel = currentLang === "fr" ? "Adequation a l'audience" : "Audience fit"; }
     if (!current.trim()) penalties += 1;
 
     var currentScore = Math.max(3, 9 - penalties);
@@ -1425,7 +1425,7 @@
     var words = text ? text.split(/\s+/).length : 0;
     var chars = text.length;
     var sentences = text ? (text.match(/[.!?]+/g) || []).length || 1 : 0;
-    var readMin = Math.max(1, Math.round(words / 200));
+    var readMin = words === 0 ? 0 : Math.max(1, Math.round(words / 200));
 
     document.getElementById("counter-words").textContent = words;
     document.getElementById("counter-chars").textContent = chars;
