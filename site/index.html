@@ -157,6 +157,55 @@
         <h2>One method, ten tools, clearer positioning.</h2>
       </div>
 
+      <div class="panel" id="diagnostic-panel" style="margin-bottom:1.25rem;">
+        <div class="panel__grid">
+          <form class="form" id="diagnostic-form">
+            <label for="diag-offer">What do you offer?</label>
+            <input id="diag-offer" type="text" placeholder="e.g. Messaging strategy service for SaaS founders">
+
+            <label for="diag-audience">Who is it for?</label>
+            <input id="diag-audience" type="text" placeholder="e.g. Seed-stage founders preparing their GTM">
+
+            <label for="diag-difference">What makes it different?</label>
+            <input id="diag-difference" type="text" placeholder="e.g. Combines research-backed clarity method + execution tools">
+
+            <label for="diag-pain">What's your main messaging pain?</label>
+            <select id="diag-pain">
+              <option value="too-vague">Too vague</option>
+              <option value="too-long">Too long</option>
+              <option value="too-generic">Sounds generic</option>
+              <option value="wrong-audience">Wrong audience fit</option>
+            </select>
+
+            <label for="diag-current">Current positioning statement (optional)</label>
+            <textarea id="diag-current" rows="4" placeholder="Paste your current tagline or positioning statement..."></textarea>
+
+            <div class="form__actions">
+              <button class="btn btn--primary" type="button" id="btn-diagnostic">Generate Clarity Report</button>
+            </div>
+          </form>
+
+          <div class="results">
+            <div class="metrics" id="diag-metrics" aria-live="polite">
+              <div class="metric"><span>Current clarity</span><strong id="diag-current-score">&mdash;</strong></div>
+              <div class="metric"><span>Potential clarity</span><strong id="diag-potential-score">&mdash;</strong></div>
+              <div class="metric"><span>Primary gap</span><strong id="diag-gap">&mdash;</strong></div>
+            </div>
+            <div class="result-card">
+              <span class="result-card__label">Clarity Report</span>
+              <p id="diag-report">Run the diagnostic to get your baseline and next best action.</p>
+            </div>
+            <div class="result-card result-card--accent">
+              <span class="result-card__label">Next step</span>
+              <p id="diag-next">Generate your first rewrite in Message Clarity Engine.</p>
+              <div class="form__actions" style="margin-top:.75rem;">
+                <button class="btn btn--ghost" type="button" id="btn-diag-to-clarity">Open Message Clarity Engine</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="tool-workspace">
         <aside class="tool-nav">
           <div class="tool-nav__intro">

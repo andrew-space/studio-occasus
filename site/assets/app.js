@@ -618,6 +618,66 @@
     if (text) text.textContent = currentLang === "fr" ? total + " / " + max + " usages gratuits aujourd'hui" : total + " / " + max + " free uses today";
   }
 
+  /* ── Guided diagnostic (Gate B) ───────────────── */
+  function runDiagnostic() {
+    var offer = (document.getElementById("diag-offer") || {}).value || "";
+    var audience = (document.getElementById("diag-audience") || {}).value || "";
+    var difference = (document.getElementById("diag-difference") || {}).value || "";
+    var pain = (document.getElementById("diag-pain") || {}).value || "too-vague";
+    var current = (document.getElementById("diag-current") || {}).value || "";
+
+    if (!offer.trim() || !audience.trim() || !difference.trim()) {
+      toast(currentLang === "fr" ? "Renseigne offre, audience et difference" : "Fill in offer, audience, and differentiation", "info");
+      return;
+    }
+
+    var penalties = 0;
+    var gapLabel = "Focus";
+    if (pain === "too-vague") { penalties += 3; gapLabel = currentLang === "fr" ? "Precision" : "Precision"; }
+    if (pain === "too-long") { penalties += 2; gapLabel = currentLang === "fr" ? "Concision" : "Concision"; }
+    if (pain === "too-generic") { penalties += 3; gapLabel = currentLang === "fr" ? "Differenciation" : "Differentiation"; }
+    if (pain === "wrong-audience") { penalties += 3; gapLabel = currentLang === "fr" ? "Audience fit" : "Audience fit"; }
+    if (!current.trim()) penalties += 1;
+
+    var currentScore = Math.max(3, 9 - penalties);
+    var potential = Math.min(10, currentScore + 4);
+
+    var report = currentLang === "fr"
+      ? "Votre message montre du potentiel, mais il manque de structure actionnable. Priorite: clarifier la promesse pour " + audience + " et expliciter ce qui rend " + offer + " distinctif."
+      : "Your message has strong potential but lacks actionable structure. Priority: clarify the promise for " + audience + " and make the differentiator of " + offer + " explicit.";
+
+    var seed = current.trim() || (offer + " for " + audience + ". " + difference + ".");
+    var next = currentLang === "fr"
+      ? "Passez dans Message Clarity Engine pour transformer ce brouillon en positionnement net, puis sauvegardez votre meilleure version."
+      : "Move to Message Clarity Engine to turn this draft into clear positioning, then save your strongest version.";
+
+    var elCurrent = document.getElementById("diag-current-score");
+    var elPotential = document.getElementById("diag-potential-score");
+    var elGap = document.getElementById("diag-gap");
+    var elReport = document.getElementById("diag-report");
+    var elNext = document.getElementById("diag-next");
+    if (elCurrent) elCurrent.textContent = currentScore + "/10";
+    if (elPotential) elPotential.textContent = potential + "/10";
+    if (elGap) elGap.textContent = gapLabel;
+    if (elReport) elReport.textContent = report;
+    if (elNext) elNext.textContent = next;
+
+    try { localStorage.setItem("occ_diag_seed", seed); } catch (e) {}
+    toast(currentLang === "fr" ? "Clarity Report genere" : "Clarity Report generated", "success");
+  }
+
+  function jumpToClarityFromDiagnostic() {
+    var seed = "";
+    try { seed = localStorage.getItem("occ_diag_seed") || ""; } catch (e) {}
+    var input = document.getElementById("clarity-input");
+    if (input && seed) input.value = seed;
+    if (window.OccApp && typeof window.OccApp.activateTool === "function") {
+      window.OccApp.activateTool("clarity");
+    }
+    var tools = document.getElementById("tools");
+    if (tools && tools.scrollIntoView) tools.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   /* ── OccApp global (called from HTML) ────────── */
   function mapAuthError(err) {
     if (!err || !err.code) return "Sign-in error.";
@@ -1511,6 +1571,12 @@
 
     var btnSocial = document.getElementById("btn-social");
     if (btnSocial) btnSocial.addEventListener("click", runSocial);
+
+    var btnDiagnostic = document.getElementById("btn-diagnostic");
+    if (btnDiagnostic) btnDiagnostic.addEventListener("click", runDiagnostic);
+
+    var btnDiagToClarity = document.getElementById("btn-diag-to-clarity");
+    if (btnDiagToClarity) btnDiagToClarity.addEventListener("click", jumpToClarityFromDiagnostic);
 
     /* Word Counter: live input */
     var counterInput = document.getElementById("counter-input");
