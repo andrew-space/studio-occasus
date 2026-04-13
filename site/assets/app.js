@@ -239,12 +239,15 @@
     setText("#btn-utm", t("utmBtn"));
     setText("#utm-copy", t("copyResult"));
     setText("#btn-tone", t("toneBtn"));
+    setText("#tone-sample", t("claritySample"));
     setText("#btn-headline", t("headlineBtn"));
+    setText("#headline-sample", t("claritySample"));
     setText("#btn-readability", t("readabilityBtn"));
     setText("#btn-email", t("emailBtn"));
     setText("#btn-seo", t("seoBtn"));
     setText("#seo-copy", t("seoCopy"));
     setText("#btn-social", t("socialBtn"));
+    setText("#social-sample", t("claritySample"));
 
     setLabel("brand-product", currentLang === "fr" ? "Nom du produit" : "Product name");
     setLabel("audience", currentLang === "fr" ? "Audience" : "Audience");
@@ -787,6 +790,35 @@
       input.value = currentLang === "fr"
         ? "Notre solution intégrée aide les équipes en croissance à structurer un storytelling à fort impact et un positionnement lisible sur des canaux digitaux fragmentés."
         : "Our cross-functional integrated solution empowers growth-stage teams to operationalize high-impact storytelling and scalable positioning across fragmented digital channels.";
+      toast(currentLang === "fr" ? "Exemple chargé" : "Example loaded", "info");
+    },
+    loadToneSample: function () {
+      var input = document.getElementById("tone-input");
+      if (!input) return;
+      input.value = currentLang === "fr"
+        ? "Notre méthodologie propriétaire accélère la mise en marché grâce à une architecture modulaire, mais nous gardons un ton humain et concret pour faciliter l'adoption par les équipes."
+        : "Our proprietary method accelerates go-to-market execution through modular architecture, while keeping a human and practical tone that teams can adopt quickly.";
+      toast(currentLang === "fr" ? "Exemple chargé" : "Example loaded", "info");
+    },
+    loadHeadlineSample: function () {
+      var first = document.getElementById("headline-input");
+      var second = document.getElementById("headline-input-2");
+      if (!first || !second) return;
+      if (currentLang === "fr") {
+        first.value = "Arrêtez de perdre des ventes: clarifiez votre message en 15 minutes";
+        second.value = "Le framework de clarté qui transforme votre positionnement en avantage concurrentiel";
+      } else {
+        first.value = "Stop losing sales: clarify your message in 15 minutes";
+        second.value = "The clarity framework that turns positioning into competitive advantage";
+      }
+      toast(currentLang === "fr" ? "Exemple chargé" : "Example loaded", "info");
+    },
+    loadSocialSample: function () {
+      var input = document.getElementById("social-input");
+      if (!input) return;
+      input.value = currentLang === "fr"
+        ? "Votre offre est solide, mais votre message ralentit la croissance. En 20 minutes, vous obtenez une version claire, actionnable et prête à publier."
+        : "Your offer is strong, but your messaging is slowing growth. In 20 minutes, get a clear, actionable version you can publish immediately.";
       toast(currentLang === "fr" ? "Exemple chargé" : "Example loaded", "info");
     },
     copySocial: function (platform) {
@@ -1679,8 +1711,14 @@
     var btnTone = document.getElementById("btn-tone");
     if (btnTone) btnTone.addEventListener("click", runTone);
 
+    var btnToneSample = document.getElementById("tone-sample");
+    if (btnToneSample) btnToneSample.addEventListener("click", window.OccApp.loadToneSample);
+
     var btnHeadline = document.getElementById("btn-headline");
     if (btnHeadline) btnHeadline.addEventListener("click", runHeadline);
+
+    var btnHeadlineSample = document.getElementById("headline-sample");
+    if (btnHeadlineSample) btnHeadlineSample.addEventListener("click", window.OccApp.loadHeadlineSample);
 
     var btnReadability = document.getElementById("btn-readability");
     if (btnReadability) btnReadability.addEventListener("click", runReadability);
@@ -1696,6 +1734,9 @@
 
     var btnSocial = document.getElementById("btn-social");
     if (btnSocial) btnSocial.addEventListener("click", runSocial);
+
+    var btnSocialSample = document.getElementById("social-sample");
+    if (btnSocialSample) btnSocialSample.addEventListener("click", window.OccApp.loadSocialSample);
 
     var btnDiagnostic = document.getElementById("btn-diagnostic");
     if (btnDiagnostic) btnDiagnostic.addEventListener("click", runDiagnostic);
