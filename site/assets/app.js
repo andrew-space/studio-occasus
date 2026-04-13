@@ -679,7 +679,7 @@
     if (pain === "too-vague") { penalties += 3; gapLabel = currentLang === "fr" ? "Precision" : "Precision"; }
     if (pain === "too-long") { penalties += 2; gapLabel = currentLang === "fr" ? "Concision" : "Concision"; }
     if (pain === "too-generic") { penalties += 3; gapLabel = currentLang === "fr" ? "Differenciation" : "Differentiation"; }
-    if (pain === "wrong-audience") { penalties += 3; gapLabel = currentLang === "fr" ? "Audience fit" : "Audience fit"; }
+    if (pain === "wrong-audience") { penalties += 3; gapLabel = currentLang === "fr" ? "Adequation audience" : "Audience fit"; }
     if (!current.trim()) penalties += 1;
 
     var currentScore = Math.max(3, 9 - penalties);
@@ -1273,25 +1273,36 @@
     var dominant = Object.keys(pcts).reduce(function (a, b) { return pcts[a] >= pcts[b] ? a : b; });
 
     ["formal", "casual", "technical", "persuasive"].forEach(function (cat) {
+      var toneLabel = currentLang === "fr"
+        ? { formal: "formel", casual: "conversationnel", technical: "technique", persuasive: "persuasif" }[cat]
+        : cat;
       var bar = document.createElement("div");
       bar.className = "tone-bar tone-bar--" + cat;
-      bar.innerHTML = "<span class='tone-bar__label'>" + cat + "</span>" +
+      bar.innerHTML = "<span class='tone-bar__label'>" + toneLabel + "</span>" +
         "<div class='tone-bar__track'><div class='tone-bar__fill' style='width:" + pcts[cat] + "%'></div></div>" +
         "<span class='tone-bar__pct'>" + pcts[cat] + "%</span>";
       container.appendChild(bar);
     });
 
     var verdict = document.getElementById("tone-advice");
-    if (verdict) verdict.textContent = "Your text is predominantly " + dominant + " (" + pcts[dominant] + "%). " + toneAdvice(dominant);
+    if (verdict) {
+      var dominantLabel = currentLang === "fr"
+        ? { formal: "formel", casual: "conversationnel", technical: "technique", persuasive: "persuasif" }[dominant]
+        : dominant;
+      verdict.textContent = msg(
+        "Votre texte est majoritairement " + dominantLabel + " (" + pcts[dominant] + "%). ",
+        "Your text is predominantly " + dominantLabel + " (" + pcts[dominant] + "%). "
+      ) + toneAdvice(dominant);
+    }
     toast(msg("Analyse du ton terminee", "Tone analysis complete"), "success");
   }
 
   function toneAdvice(t) {
     var map = {
-      formal: "Consider softening for broader audiences.",
-      casual: "Great for social media, but tighten for professional collateral.",
-      technical: "Works for expert audiences — simplify for general marketing.",
-      persuasive: "Strong sales copy. Ensure claims are backed by evidence."
+      formal: msg("Adoucissez legerement le ton pour toucher une audience plus large.", "Consider softening for broader audiences."),
+      casual: msg("Tres bon pour le social, mais resserrez pour les supports professionnels.", "Great for social media, but tighten for professional collateral."),
+      technical: msg("Pertinent pour des experts, simplifiez pour un public plus large.", "Works for expert audiences; simplify for general marketing."),
+      persuasive: msg("Bon potentiel commercial. Verifiez que chaque promesse est prouvee.", "Strong sales copy. Ensure claims are backed by evidence.")
     };
     return map[t] || "";
   }
@@ -1355,9 +1366,9 @@
       renderHeadlineScore("headline-result-2", s2);
       var winner = document.getElementById("headline-winner");
       if (winner) {
-        if (s1.total > s2.total) winner.textContent = "→ Headline A wins by " + (s1.total - s2.total) + " points.";
-        else if (s2.total > s1.total) winner.textContent = "→ Headline B wins by " + (s2.total - s1.total) + " points.";
-        else winner.textContent = "→ It's a tie! Both headlines score equally.";
+        if (s1.total > s2.total) winner.textContent = msg("→ Le titre A gagne avec " + (s1.total - s2.total) + " points d'avance.", "→ Headline A wins by " + (s1.total - s2.total) + " points.");
+        else if (s2.total > s1.total) winner.textContent = msg("→ Le titre B gagne avec " + (s2.total - s1.total) + " points d'avance.", "→ Headline B wins by " + (s2.total - s1.total) + " points.");
+        else winner.textContent = msg("→ Egalite parfaite: les deux titres ont le meme score.", "→ It's a tie! Both headlines score equally.");
       }
     } else {
       var wrap2 = document.getElementById("headline-result-2-wrap");
@@ -1383,13 +1394,13 @@
         "<div class='headline-score__total'>" +
           "<span class='headline-score__number'>" + s.total + "</span>" +
           "<span class='headline-score__grade " + gradeClass + "'>" + s.grade + "</span>" +
-          "<span style='font-size:.85rem;color:var(--muted);margin-left:.5rem'>" + s.wordCount + " words</span>" +
+          "<span style='font-size:.85rem;color:var(--muted);margin-left:.5rem'>" + s.wordCount + " " + msg("mots", "words") + "</span>" +
         "</div>" +
         "<div class='headline-score__bars'>" +
-          scoreBarHTML("Length", s.length, 25) +
-          scoreBarHTML("Power", s.power, 25) +
-          scoreBarHTML("Clarity", s.clarity, 25) +
-          scoreBarHTML("Emotion", s.emotion, 25) +
+          scoreBarHTML(msg("Longueur", "Length"), s.length, 25) +
+          scoreBarHTML(msg("Impact", "Power"), s.power, 25) +
+          scoreBarHTML(msg("Clarte", "Clarity"), s.clarity, 25) +
+          scoreBarHTML(msg("Emotion", "Emotion"), s.emotion, 25) +
         "</div>" +
       "</div>";
   }
@@ -1407,6 +1418,7 @@
      TOOL 6 · Word Counter (live)
      ═══════════════════════════════════════════════════ */
   var PLATFORM_LIMITS = { x: 280, li: 3000, ig: 2200, fb: 63206 };
+    var lastCounterWords = 0;
 
   function runCounter() {
     var text = (document.getElementById("counter-input").value || "").trim();
@@ -1431,8 +1443,10 @@
     });
 
     /* Track total words for gamification */
+    var deltaWords = Math.max(0, words - lastCounterWords);
+    lastCounterWords = words;
     var g = getGamification();
-    g.totalWords = (g.totalWords || 0) + words;
+    g.totalWords = (g.totalWords || 0) + deltaWords;
     saveGamification(g);
   }
 
