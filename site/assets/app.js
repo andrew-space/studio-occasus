@@ -609,13 +609,13 @@
     if (isPro) { bar.classList.add("hidden"); return; }
     bar.classList.remove("hidden");
     var u = getUsage();
-    var total = (u.clarity || 0) + (u.brand || 0) + (u.readability || 0) + (u.email || 0) + (u.seo || 0);
-    var max = LIMITS.clarity + LIMITS.brand + LIMITS.readability + LIMITS.email + LIMITS.seo;
+    var total = (u.clarity || 0) + (u.brand || 0);
+    var max = LIMITS.clarity + LIMITS.brand;
     var pct = Math.min(100, Math.round((total / max) * 100));
     var fill = bar.querySelector(".usage-bar__fill");
     var text = bar.querySelector(".usage-bar__text");
     if (fill) { fill.style.width = pct + "%"; fill.classList.toggle("usage-bar__fill--warn", pct >= 80); }
-    if (text) text.textContent = currentLang === "fr" ? total + " / " + max + " usages gratuits aujourd'hui" : total + " / " + max + " free uses today";
+    if (text) text.textContent = currentLang === "fr" ? total + " / " + max + " actions guidees gratuites aujourd'hui" : total + " / " + max + " guided free actions today";
   }
 
   /* ── Guided diagnostic (Gate B) ───────────────── */
