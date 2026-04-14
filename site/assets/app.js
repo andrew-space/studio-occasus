@@ -71,7 +71,14 @@
       emailBtn: "Score subject line",
       seoBtn: "Generate preview",
       seoCopy: "Copy HTML",
-      socialBtn: "Format for all platforms"
+      socialBtn: "Format for all platforms",
+      quickstartTitle: "Quickstart in 2 minutes",
+      quickstartStep1: "1. Fill the 5 diagnostic fields and generate your clarity report.",
+      quickstartStep2: "2. Open Message Clarity Engine to produce your improved version.",
+      quickstartStep3: "3. Save your best rewrite to track progress over time.",
+      quickstartBtn: "Start quickstart",
+      freeProTitle: "Free vs Pro at a glance",
+      inlineUpgradeBtn: "Compare and upgrade"
     },
     fr: {
       docTitle: "Occasus Lab | Service de clarte pour fondateurs",
@@ -132,7 +139,14 @@
       emailBtn: "Noter l'objet",
       seoBtn: "Générer l'aperçu",
       seoCopy: "Copier le HTML",
-      socialBtn: "Adapter à toutes les plateformes"
+      socialBtn: "Adapter à toutes les plateformes",
+      quickstartTitle: "Demarrage guide en 2 minutes",
+      quickstartStep1: "1. Remplissez les 5 champs du diagnostic et générez le rapport de clarté.",
+      quickstartStep2: "2. Ouvrez Message Clarity Engine pour produire une version améliorée.",
+      quickstartStep3: "3. Sauvegardez la meilleure version pour suivre vos progrès.",
+      quickstartBtn: "Lancer le demarrage guide",
+      freeProTitle: "Free vs Pro en un coup d'oeil",
+      inlineUpgradeBtn: "Comparer et passer en Pro"
     }
   };
 
@@ -173,6 +187,31 @@
 
   function msg(frText, enText) {
     return currentLang === "fr" ? frText : enText;
+  }
+
+  function trackEvent(name, props) {
+    if (!name) return;
+    var event = {
+      name: name,
+      props: props || {},
+      at: new Date().toISOString(),
+      lang: currentLang,
+      isPro: !!isPro,
+      userId: currentUser ? currentUser.uid : null
+    };
+
+    try {
+      var key = "occ_event_log";
+      var items = JSON.parse(localStorage.getItem(key) || "[]");
+      if (!Array.isArray(items)) items = [];
+      items.push(event);
+      if (items.length > 300) items = items.slice(items.length - 300);
+      localStorage.setItem(key, JSON.stringify(items));
+    } catch (e) {}
+
+    if (firebaseReady && currentUser && db) {
+      db.collection("analytics_events").add(event).catch(function () {});
+    }
   }
 
   function normalizeEmail(email) {
@@ -287,6 +326,13 @@
     setText("#btn-seo", t("seoBtn"));
     setText("#seo-copy", t("seoCopy"));
     setText("#btn-social", t("socialBtn"));
+    setText("#quickstart-title", t("quickstartTitle"));
+    setText("#quickstart-step-1", t("quickstartStep1"));
+    setText("#quickstart-step-2", t("quickstartStep2"));
+    setText("#quickstart-step-3", t("quickstartStep3"));
+    setText("#btn-quickstart", t("quickstartBtn"));
+    setText("#freepro-title", t("freeProTitle"));
+    setText("#btn-upgrade-inline", t("inlineUpgradeBtn"));
     setText("#social-sample", t("claritySample"));
 
     setLabel("brand-product", currentLang === "fr" ? "Nom du produit" : "Product name");
@@ -705,6 +751,13 @@
     if (elReport) elReport.textContent = report;
     if (elNext) elNext.textContent = next;
 
+    trackEvent("diagnostic_completed", {
+      currentScore: currentScore,
+      potentialScore: potential,
+      primaryGap: gapLabel,
+      pain: pain
+    });
+
     try { localStorage.setItem("occ_diag_seed", seed); } catch (e) {}
     toast(msg("Rapport de clarte genere", "Clarity report generated"), "success");
   }
@@ -719,6 +772,15 @@
     }
     var tools = document.getElementById("tools");
     if (tools && tools.scrollIntoView) tools.scrollIntoView({ behavior: "smooth", block: "start" });
+    trackEvent("diagnostic_to_clarity_clicked");
+  }
+
+  function startQuickstart() {
+    var tools = document.getElementById("tools");
+    if (tools && tools.scrollIntoView) tools.scrollIntoView({ behavior: "smooth", block: "start" });
+    var offer = document.getElementById("diag-offer");
+    if (offer && offer.focus) offer.focus();
+    trackEvent("quickstart_started");
   }
 
   /* ── OccApp global (called from HTML) ────────── */
@@ -764,6 +826,7 @@
     showUpgradeModal: function () {
       var m = document.getElementById("upgrade-modal");
       if (m) m.classList.remove("hidden");
+      trackEvent("upgrade_modal_opened");
     },
     selectedPlan: "monthly",
     selectPlan: function (plan) {
@@ -792,6 +855,8 @@
         toast(msg("Plan invalide selectionne", "Invalid plan selected"), "error");
         return;
       }
+
+      trackEvent("checkout_session_requested", { plan: plan });
 
       currentUser.getIdToken(true).then(function (idToken) {
         return fetch(BACKEND_CONFIG.checkoutEndpoint, {
@@ -1026,6 +1091,8 @@
       db.collection("users").doc(currentUser.uid).collection("clarity_versions").doc(id).set(version).catch(function () {});
     }
 
+    trackEvent("clarity_version_saved", { totalSaved: items.length });
+
     toast(msg("Version enregistree", "Version saved"), "success");
   }
 
@@ -1155,6 +1222,12 @@
     saveGamification(g);
     checkBadges();
 
+    trackEvent("clarity_run_completed", {
+      reduction: result.reduction,
+      jargonReplaced: result.jargon,
+      fillersRemoved: result.fillers
+    });
+
     toast(currentLang === "fr" ? "Analyse de clarté terminée" : "Clarity analysis complete", "success");
   }
 
@@ -1200,6 +1273,7 @@
     document.getElementById("value-output").textContent = elevator;
     document.getElementById("lead-output").textContent = headline;
     document.getElementById("brand-cta").textContent = cta;
+    trackEvent("positioning_generated", { tone: tone });
     toast(currentLang === "fr" ? "Positionnement genere" : "Positioning generated", "success");
   }
   function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ""; }
@@ -1798,12 +1872,26 @@
     var btnDiagToClarity = document.getElementById("btn-diag-to-clarity");
     if (btnDiagToClarity) btnDiagToClarity.addEventListener("click", jumpToClarityFromDiagnostic);
 
+    var btnQuickstart = document.getElementById("btn-quickstart");
+    if (btnQuickstart) btnQuickstart.addEventListener("click", startQuickstart);
+
+    var btnUpgradeInline = document.getElementById("btn-upgrade-inline");
+    if (btnUpgradeInline) btnUpgradeInline.addEventListener("click", function () {
+      trackEvent("inline_upgrade_clicked");
+      window.OccApp.showUpgradeModal();
+    });
+
     /* Word Counter: live input */
     var counterInput = document.getElementById("counter-input");
     if (counterInput) {
       counterInput.addEventListener("input", runCounter);
       runCounter();
     }
+
+    trackEvent("page_view", {
+      path: window.location.pathname,
+      referrer: document.referrer ? "external" : "direct"
+    });
   }
 
   if (document.readyState === "loading") {

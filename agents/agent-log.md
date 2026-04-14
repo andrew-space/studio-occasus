@@ -346,3 +346,30 @@ This file is the running history for Studio Occasus (personal project). It shoul
 2. Explicit no-overlap brainstorm assignments for Agents 1 through 12.
 3. A difference-first sprint rule: ship only what improves clarity outcome, trust, activation, or conversion.
 - Session operating mode shifted to "Roast-to-Result" to avoid feature vanity and AI-fluff outputs.
+
+## 2026-04-14 - Reunion multi-agents executee (post-deploy, sans Stripe)
+
+- Reunion operationnelle conduite par Agent 12 avec arbitrages croises Agent 1 (strategie), Agent 2 (UX), Agent 3 (frontend), Agent 4 (narrative), Agent 5 (deploy), Agent 8 (data), Agent 10 (onboarding).
+- Objectif valide: augmenter activation et intention d'upgrade sans ajouter Stripe dans ce cycle.
+
+### Decisions appliquees immediatement
+
+1. Ajouter une instrumentation funnel minimale cote produit.
+2. Ajouter un bloc conversion "Free vs Pro" dans le flux des outils.
+3. Ajouter un mini onboarding guide (quickstart 3 etapes) en haut du workspace.
+4. Deployer apres backup local pre-risque.
+
+### Implementation shipped
+
+- `site/assets/app.js`
+	- Ajout d'un logger d'evenements leger (`trackEvent`) avec retention locale.
+	- Emission d'evenements cles: `page_view`, `quickstart_started`, `diagnostic_completed`, `diagnostic_to_clarity_clicked`, `clarity_run_completed`, `clarity_version_saved`, `positioning_generated`, `inline_upgrade_clicked`, `upgrade_modal_opened`, `checkout_session_requested`.
+	- Envoi Firestore non-bloquant vers `analytics_events` si session auth active.
+- `site/index.html`
+	- Ajout d'un bloc "Quickstart in 2 minutes" avec CTA `Start quickstart`.
+	- Ajout d'un bloc "Free vs Pro at a glance" avec CTA `Compare and upgrade`.
+	- Ajout de styles locaux legers pour ces blocs (responsive).
+
+### Risk handling
+
+- Backup local cree avant modifications: `backups/20260414-144612-pre-agent-reunion-deploy.zip` + manifeste associe.
